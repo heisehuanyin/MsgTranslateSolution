@@ -1,0 +1,43 @@
+README
+本程序组成：本程序是由一个主程序与若干个拓展dll组成的，主程序作为翻译工作的框架，用来完成整个程序的运行逻辑，而dll是主程序的拓展。
+			能够丰富主程序的解析能力，为主程序带来更加丰富的解析手段。
+
+软件配置文件示例：
+//=========================================================================================================================
+“rules.parsebase”
+///////////////////////////
+
+#以下，“#”之后的文字都被认为是注释，优先忽略掉
+
+#以下，以“>”开头的文字被定义为单元配置条目
+>rtaddr:Card_57_original_msg_parse_support.dll路径 GET RTADDR			#配置RT地址解析单元
+>subaddr:Card_57_original_msg_parse_support.dll路径 GET SUBADDR			#配置Subaddr地址解析单元
+>mtstate:Card_57_original_msg_parse_support.dll路径 GET MTSTATE			#配置Mt状态字解析单元
+>rt1state:Card_57_original_msg_parse_support.dll路径 GET RTSTATE			#配置Rt1（首选RT设备）状态字解析单元
+>rtaddr:Card_57_original_msg_parse_support.dll路径 GET RTADDR_E			#配置RT2地址解析单元
+>subaddr:Card_57_original_msg_parse_support.dll路径 GET SUBADDR_E		#配置Subaddr2地址解析单元
+>rt2state:Card_57_original_msg_parse_support.dll路径 GET RTSTATE_E		#配置Rt2（可选RT设备）状态字解析单元
+>systime:Card_57_original_msg_parse_support.dll路径 GET SYSTIME			#配置系统时标解析单元
+>b1553time:Card_57_original_msg_parse_support.dll路径 GET B1553TIME		#配置1553B时标解析单元
+>msgkind:Card_57_original_msg_parse_support.dll路径 GET MSGLENGTH		#配置消息长度解析单元
+>msgtype:Card_57_original_msg_parse_support.dll路径 GET MSGTYPE			#配置消息类型解析单元
+>funcmd:Fun_cmd_parse_dll.dll路径 [args] GET HEAD						#配置消息功能码解析单元
+>msghead:Msg_head_parse_dll.dll路径 GET MSGHEAD							#配置消息帧头解析单元
+
+
+
+#以下，以“::”开头的文字被定义为全局范围内适用的，消息解析条件结构
+::rtaddr,msghead,funcmd							#务必保证应用本行配置信息，每条总线消息都仅能找出唯一一条对应的翻译规则
+
+
+#以下，以“"”开头的内容是每条总线消息解析的基准
+#以下文字中，利用“""”（双引号）扩起来的片段是每条总线消息的判断判据及过程，仅支持10进制与十六进制表达方式
+#以下文字中，“:”之后的内容是每条总线解析的详细基准
+"8,0x300,0x01":[msghead],[keyctrl],[keyauth]
+
+
+
+
+
+
+//=========================================================================================================================
