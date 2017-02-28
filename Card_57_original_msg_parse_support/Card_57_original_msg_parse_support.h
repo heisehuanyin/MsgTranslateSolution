@@ -30,9 +30,6 @@ public:
 private:
 	char* KeyWordsArray[20];
 
-	// 通过此函数返回消息的类别，返回值是消息的类别
-	virtual int GetMsgType(const UWORD_i16* const ArrayIn);
 	// 翻转一个十六位数字的高低八位
 	int Reversal(const UWORD_i16* const oneWord);
-	virtual int MSGCount(const UWORD_i16* const msgArray);
 };

@@ -44,9 +44,10 @@ int CodeMarkProcess::ProcessMsgUnit(const UWORD_i16* const ptr_value_first, cons
 		{
 			for (int is = 0; is < i+1; is++)
 			{
-				sprintf_s(temp, 20, "%x", *(ptr_value_first + is));
+				sprintf_s(temp, 200, "%s%x", temp,*(ptr_value_first + is));
 			}
 
+			sprintf_s(*bufferOut, 200, "%s", temp);
 			return 0;
 		}
 	}

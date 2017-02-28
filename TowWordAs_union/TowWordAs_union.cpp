@@ -60,26 +60,22 @@ int TwoWordAs_union::ProcessMsgUnit(const UWORD_i16* const ptr_value_first, cons
 				case 0:
 					cov_f.mvalue[0] = *ptr_value_first;
 					cov_f.mvalue[1] = *(ptr_value_first+1);
-					sprintf_s(temp, 20, "%f", cov_f.fvalue);
-					*bufferOut = temp;
+					sprintf_s(*bufferOut, 20, "%f", cov_f.fvalue);
 					break;
 				case 1:
 					cov_f.mvalue[1] = *ptr_value_first;
 					cov_f.mvalue[0] = *(ptr_value_first + 1);
-					sprintf_s(temp, 20, "%f", cov_f.fvalue);
-					*bufferOut = temp;
+					sprintf_s(*bufferOut, 20, "%f", cov_f.fvalue);
 					break;
 				case 2:
 					cov_i.mvalue[0] = *ptr_value_first;
 					cov_i.mvalue[1] = *(ptr_value_first + 1);
-					sprintf_s(temp, 20, "%d", cov_i.ivalue);
-					*bufferOut = temp;
+					sprintf_s(*bufferOut, 20, "%d", cov_i.ivalue);
 					break;
 				case 3:
 					cov_i.mvalue[1] = *ptr_value_first;
 					cov_i.mvalue[0] = *(ptr_value_first + 1);
-					sprintf_s(temp, 20, "%d", cov_i.ivalue);
-					*bufferOut = temp;
+					sprintf_s(*bufferOut, 20, "%d", cov_i.ivalue);
 					break;
 				default:
 					break;

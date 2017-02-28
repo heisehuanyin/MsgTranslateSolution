@@ -60,7 +60,7 @@ int OneWordAs_float::ProcessMsgUnit(const UWORD_i16* const ptr_value_first, cons
 			}
 
 			sprintf_s(temp, 20, "%f", fvalue);
-			*bufferOut = temp;
+			sprintf_s(*bufferOut,20,"%s",temp);
 
 			return 0;
 		}

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<protocl>
+  <config>
+    <library>
+       <baseSupport rel="Card_35_original_msg_parse.dll"/>
+       <enhance rel="xxx.dll" />
+       <enhance rel="xxx.dll" />
+       <enhance rel="xxx.dll" />
+       <enhance rel="xxx.dll" />
+       <enhance rel="xxx.dll" />
+       <enhance rel="xxx.dll" />
+       <enhance rel="xxx.dll" />
+       <enhance rel="xxx.dll" />
+     </library>
+    <cmdlist>
+       <rtaddr rel="xxx.dll RTADDR"/>
+       <subaddr rel="xxx.dll SUBADDR"/>
+    </cmdlist>
+    <pattern>
+          <adapter>
+            <rtaddr windex="1" />
+            <rtaddr windex="1" />
+            <rtaddr windex="1" />
+          </adapter>
+          <adapter>
+            <rtaddr windex="1" />
+            <rtaddr windex="1" />
+            <rtaddr windex="1" />
+          </adapter>
+          <adapter>
+            <rtaddr windex="1" />
+            <rtaddr windex="1" />
+            <rtaddr windex="1" />
+          </adapter>
+    </pattern>
+  </config>
+  <parselimit>
+    <rtaddr value="xxxx">
+      <subaddr value="xxxx">
+        <cmd-f value="xxxx">
+          <msghead index="0" length="1" name="xxx" />
+          <msghead index="0" length="1" name="xxx" />
+          <msghead index="0" length="1" name="xxx" />
+          <msghead index="0" length="1" name="xxx" />
+          <msghead index="0" length="1" name="xxx" />
+          <msghead index="0" length="1" name="xxx" />
+        </cmd-f>
+      </subaddr>
+    </rtaddr>
+  </parselimit>
+</protocl>
