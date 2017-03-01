@@ -150,10 +150,10 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AbstractPlugClass.h" />
     <ClInclude Include="ExtensionLoader.h" />
     <ClInclude Include="Macro_Global.h" />
     <ClInclude Include="main.h" />
-    <ClInclude Include="StandardMsgSourceInterface.h" />
     <ClInclude Include="StandardParseBaseSupportInterface.h" />
     <ClInclude Include="StandardExtensionInterface.h" />
   </ItemGroup>

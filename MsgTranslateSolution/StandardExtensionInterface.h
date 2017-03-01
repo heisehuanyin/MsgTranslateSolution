@@ -15,12 +15,13 @@
 #pragma once
 
 #include "../MsgTranslateSolution/Macro_Global.h"
+#include "AbstractPlugClass.h"
 
 
 
 // 面向对象化的插件实现方式，相对于传统的C语言有结构清晰，行为明确的优点
 // 每个插件必须暴漏的基本接口
-class StandardExtensionInterface
+class StandardExtensionInterface:public AbstractPlugClass
 {
 public:
 	// 抽象类的虚析构函数 
@@ -31,6 +32,11 @@ public:
 
 	// 列举所有可选参数
 	virtual int EnumKeyWordsInner(char*** argsArrayOut, int* argsCount) = 0;
+
+	virtual int GetPlugTypeMsg(char ** bufferOut) {
+		*bufferOut = "EnhancePlug";
+		return 0;
+	}
 
 };
 

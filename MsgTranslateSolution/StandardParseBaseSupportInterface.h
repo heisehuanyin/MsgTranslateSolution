@@ -14,8 +14,9 @@
 
 #pragma once
 #include "../MsgTranslateSolution/Macro_Global.h"
+#include "AbstractPlugClass.h"
 
-class StandardParseBaseSupportInterface
+class StandardParseBaseSupportInterface :public AbstractPlugClass
 {
 public:
 	~StandardParseBaseSupportInterface() {};
@@ -33,6 +34,11 @@ public:
 
 	// 将纯消息内容从原始消息中提取出来
 	virtual int GetPureMsgBody(const UWORD_i16* const msgBufin,UWORD_i16* bufferOut) = 0;
+
+	virtual int GetPlugTypeMsg(char ** bufferOut) {
+		*bufferOut = "BaseSupport";
+		return 0;
+	}
 };
 
 

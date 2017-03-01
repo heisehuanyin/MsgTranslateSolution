@@ -67,11 +67,3 @@ int ExtensionLoader::LoadNewParseEnhanceExtension(const char* const libraryName,
 	return 0;
 }
 
-
-// 加载消息源插件
-int ExtensionLoader::LoadNewMsgSourceExtension(const char* const libraryName, char**  argv, int argc, StandardMsgSourceInterface** ExtensionRefOut)
-{
-	USES_CONVERSION;
-
-	return 0;
-}
