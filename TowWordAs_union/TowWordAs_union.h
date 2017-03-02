@@ -1,7 +1,6 @@
 #pragma once
 #include "../MsgTranslateSolution/StandardExtensionInterface.h"
 #include "../MsgTranslateSolution/Macro_Global.h"
-#include "E:\Project_Software\VS2015\MsgTranslateSolution\MsgTranslateSolution\StandardExtensionInterface.h"
 
 class TwoWordAs_union :
 	public StandardExtensionInterface

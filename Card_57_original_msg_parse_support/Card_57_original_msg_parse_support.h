@@ -32,4 +32,7 @@ private:
 
 	// 翻转一个十六位数字的高低八位
 	int Reversal(const UWORD_i16* const oneWord);
+public:
+	int GetOneOriginalMsg(UWORD_i16** bufferOut);
+	virtual int OpenBinaryDataFile(const char* const filePath);
 };

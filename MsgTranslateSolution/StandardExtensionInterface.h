@@ -41,5 +41,5 @@ public:
 };
 
 // 连接动态链接库插件与解析器的一级接口，每个动态dll都需要实现这个接口函数，将插件类导入程序
-extern "C" STDINTERFACE_API StandardExtensionInterface* GetNewParseExtensionInstancePtr(char** argv, int argc = 0);
+extern "C" STDINTERFACE_API StandardExtensionInterface* GetNewParseExtensionInstancePtr(char** argv, int argc);
 

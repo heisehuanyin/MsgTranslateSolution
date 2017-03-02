@@ -238,3 +238,15 @@ int Card57_parse_support::Reversal(const UWORD_i16* const oneWord)
 
 	return ((*oneWord & 0xff) << 8) | temp;
 }
+
+
+int Card57_parse_support::GetOneOriginalMsg(UWORD_i16** bufferOut)
+{
+	return 0;
+}
+
+
+int Card57_parse_support::OpenBinaryDataFile(const char* const filePath)
+{
+	return 0;
+}

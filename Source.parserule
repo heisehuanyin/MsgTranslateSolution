@@ -16,24 +16,33 @@
 >b1553time:Card_57_original_msg_parse_support.dll B1553TIME		#配置1553B时标解析单元
 >msgkind:Card_57_original_msg_parse_support.dll MSGLENGTH		#配置消息长度解析单元
 >msgtype:Card_57_original_msg_parse_support.dll MSGTYPE			#配置消息类型解析单元
->funcmd:Fun_cmd_parse_dll.dll FUNC								#配置消息功能码解析单元
->msghead:Msg_head_parse_dll.dll MSGHEAD							#配置消息帧头解析单元
-
+>msgtype:Card_57_original_msg_parse_support.dll MSCOUNT			#配置消息类型解析单元
+>dateparse:Code_mark_parse.dll WORD_3		
+>sumcalc:Code_mark_parse.dll WORD_1		
+>vector:Code_mark_parse.dll WORD_1					
+>floatnum:OneWordAs_float.dll DIVIDE_100						
+>floatunion:TwoWordAs_union.dll 2WORD_AS_float_HBIT_first
+>intunion:TwoWordAs_union.dll 2WORD_AS_int_HBIT_first
+>msghead:MsgHeadParse.dll DIRECT_HEX
 
 
 #以下，以“::”开头的文字被定义为全局范围内适用的，消息解析条件构成
 #此处项目都是上面配置出来的命令项目的组合
-::rtaddr,msghead,funcmd											#务必保证应用本行配置信息，每条总线消息都仅能找出唯一一条对应的翻译规则
+::rtaddr,subaddr,msghead										#务必保证应用本行配置信息，每条总线消息都仅能找出唯一一条对应的翻译规则
 																#否则可能出现规则歧义，造成解析错误
 
 
 #以下，以“"”开头的内容是每条总线消息解析的基准
-#以下文字中，利用“""”（双引号）扩起来的片段是每条总线消息的判断判据及过程，仅支持10进制与十六进制表达方式
+#以下文字中，利用“""”（双引号）扩起来的片段是每条总线消息的判断判据及过程，仅支持十六进制表达方式
 #以下文字中，“:”之后的内容是每条总线解析的详细基准
 #解析过程中出现未知命令，将自动忽略（依据：系统只认识前面配置过的命令）
 
-"8,0x300,0x01":[msghead],[keyctrl],[keyauth],[datalabel:funcmd],[pass],[sumcalc]
-
+"0xf,0x01,0x0a01":[msghead],[系统日期:dateparse],[pass],[pass],[sumcalc]
+"1,6,0x0a02":[msghead],[一个单元浮点:floatnum],[两字浮点:floatunion],[pass],[两字整形:intunion],[pass]
+"0xa,2,0x0a03":[msghead],[一字浮点:floatnum],[两字浮点2:floatunion],[pass],[两字整形2:intunion],[pass]
+"0xa,3,0x0a03":[msghead],[一字浮点:floatnum],[两字浮点2:floatunion],[pass],[两字整形2:intunion],[pass]
+"not,0,not":[矢量字:msghead]
 
 #其中由中括号括起来的内容代表一个消息单元（16位）,每个都可以写成“[xxxx]”或者“[datalabel:xxxx]”的形式，datalabel是可以人为定义的
 #默认情况下系统使用之前为每个命令配置的参数来标识每个解析出来的数据，需要更精确的定义的时候，可以人为标识每个数据含义
+#需要解析多少个数据，就需要写几个配置字（利用“,”分割的，被“[”和“]”括起来的单元）,后面的如果不写，自动被忽略，前面的被用来确定index,不可以不写

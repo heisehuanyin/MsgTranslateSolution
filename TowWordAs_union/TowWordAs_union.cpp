@@ -5,7 +5,6 @@
 
 #include "stdafx.h"
 #include "TowWordAs_union.h"
-#include "../MsgTranslateSolution/Macro_Global.h"
 #include <stdio.h>
 
 StandardExtensionInterface* GetNewParseExtensionInstancePtr(char** argv, int argc) {

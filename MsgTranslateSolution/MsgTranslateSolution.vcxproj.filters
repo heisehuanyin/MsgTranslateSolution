@@ -21,6 +21,15 @@
     <ClCompile Include="ExtensionLoader.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="PlugWrapper.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CmdWrapper.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ParseEnvironment.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StandardExtensionInterface.h">
@@ -39,6 +48,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="AbstractPlugClass.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PlugWrapper.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CmdWrapper.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ParseEnvironment.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

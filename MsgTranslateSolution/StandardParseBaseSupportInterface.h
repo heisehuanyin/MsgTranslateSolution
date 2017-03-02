@@ -39,6 +39,10 @@ public:
 		*bufferOut = "BaseSupport";
 		return 0;
 	}
+	virtual int OpenBinaryDataFile(const char* const filePath) = 0;
+
+	//返回值标识是否是最后一条总线消息，是的话返回-1，否则返回0
+	virtual int GetOneOriginalMsg(UWORD_i16** bufferOut) = 0;
 };
 
 

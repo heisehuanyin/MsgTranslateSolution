@@ -47,3 +47,4 @@ Visual C++
 	5.ParseConfigration.xml文件					：结构化的解析规则配置文件，便于软件高速读取和引用，较为繁琐，编译程序自动生成
 	6.程序利用dll拓展能力说明.txt					：如何利用dll对整个消息解析平台进行拓展的实用帮助
 	7.ParseCompiler程序							：自动转换parserule文件到ParseConfigration文件的程序
+	8.BinaryDataMaker程序						：构建一个仿真的总线文件，验证软件翻译功能
