@@ -151,6 +151,10 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ParseEnvironment.cpp" />
     <ClCompile Include="PlugWrapper.cpp" />
+    <ClCompile Include="tinystr.cpp" />
+    <ClCompile Include="tinyxml.cpp" />
+    <ClCompile Include="tinyxmlerror.cpp" />
+    <ClCompile Include="tinyxmlparser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractPlugClass.h" />
@@ -162,6 +166,8 @@
     <ClInclude Include="PlugWrapper.h" />
     <ClInclude Include="StandardParseBaseSupportInterface.h" />
     <ClInclude Include="StandardExtensionInterface.h" />
+    <ClInclude Include="tinystr.h" />
+    <ClInclude Include="tinyxml.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
