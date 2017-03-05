@@ -28,8 +28,14 @@ int ParseUnit::initSelf(const char* const parseBase, const char* const binaryDat
 	this->StrictStr = strictString;
 
 	this->doc = new TiXmlDocument(parseBaseDocPath);
+	this->doc->LoadFile();
+
 	//创建插件加载器
 	this->loadTools = new ExtensionLoader();
+	this->LoadParseLibrary();
+	this->LoadCmdEnterPoint();
+	this->LoadPatternAndParseRule();
+
 
 	if (outputFile != NULL) {
 		fopen_s(&this->outputFilePtr, outputFile, "w");
@@ -87,7 +93,8 @@ int ParseUnit::CollectCmdEnterPoint(const char* const CmdName, const char* const
 int ParseUnit::LoadParseLibrary() {
 
 	//寻找合适节点====================================================
-	TiXmlElement* sysCfg = this->doc->FirstChildElement("protocol")->FirstChildElement("sysConfig");
+	TiXmlElement* protocolNode = this->doc->FirstChildElement("protocol");
+	TiXmlElement* sysCfg = protocolNode->FirstChildElement("sysConfig");
 	TiXmlElement* library = sysCfg->FirstChildElement("library");
 	TiXmlElement* baseSupport = library->FirstChildElement("baseSupport");
 
@@ -148,7 +155,7 @@ int ParseUnit::LoadCmdEnterPoint() {
 		this->CollectCmdEnterPoint(cmdOne->Value(), cmdOne->Attribute("rel"));
 
 
-		cmdOne->NextSiblingElement();
+		cmdOne = cmdOne->NextSiblingElement();
 	}
 	return 0;
 }

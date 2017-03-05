@@ -41,25 +41,24 @@ void main(int argc, char** argv) {
 			if (!(ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
 				wprintf(L"%s\n\n", ffd.cFileName);
 				char ttmm[MAX_PATH] = "";
-
-
 				WideCharToMultiByte(CP_ACP, 0, ffd.cFileName, wcslen(ffd.cFileName), ttmm, MAX_PATH, 0, 0);
 
 				ExtensionLoader loadTools = ExtensionLoader();
-
 				AbstractPlugClass* basep = NULL;
 				int rtn = loadTools.LoadNewParseBaseExtension(ttmm, nullptr, 0, (StandardParseBaseSupportInterface**)&basep);
-
 				if (rtn == 2) {
 					rtn = loadTools.LoadNewParseEnhanceExtension(ttmm, nullptr, 0, (StandardExtensionInterface**)&basep);
 				}
+
+
+
 
 				char* ttmp = "";
 				char ** ab = nullptr;
 				int ntemp = 0;
 				basep->GetPlugTypeMsg(&ttmp);
-				printf("插件类型：%s\n", ttmp);
 
+				printf("插件类型：%s\n", ttmp);
 				if (!strcmp(ttmp, "BaseSupport")) {
 					((StandardParseBaseSupportInterface*)basep)->EnumKeyWordsInner(&ab, &ntemp);
 					printf("内部参数:\n");

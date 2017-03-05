@@ -162,7 +162,6 @@
     <ClInclude Include="CmdWrapper.h" />
     <ClInclude Include="ExtensionLoader.h" />
     <ClInclude Include="Macro_Global.h" />
-    <ClInclude Include="main.h" />
     <ClInclude Include="ParseEnviroments.h" />
     <ClInclude Include="ParseEnvironment.h" />
     <ClInclude Include="PlugWrapper.h" />
