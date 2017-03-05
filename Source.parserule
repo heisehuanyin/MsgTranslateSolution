@@ -9,14 +9,14 @@
 >subaddr:Card_57_original_msg_parse_support.dll SUBADDR			#配置Subaddr地址解析单元
 >mtstate:Card_57_original_msg_parse_support.dll MTSTATE			#配置Mt状态字解析单元
 >rt1state:Card_57_original_msg_parse_support.dll RTSTATE		#配置Rt1（首选RT设备）状态字解析单元
->rtaddr:Card_57_original_msg_parse_support.dll RTADDR_E			#配置RT2地址解析单元
->subaddr:Card_57_original_msg_parse_support.dll SUBADDR_E		#配置Subaddr2地址解析单元
+>rt2addr:Card_57_original_msg_parse_support.dll RTADDR_E			#配置RT2地址解析单元
+>sub2addr:Card_57_original_msg_parse_support.dll SUBADDR_E		#配置Subaddr2地址解析单元
 >rt2state:Card_57_original_msg_parse_support.dll RTSTATE_E		#配置Rt2（可选RT设备）状态字解析单元
 >systime:Card_57_original_msg_parse_support.dll SYSTIME			#配置系统时标解析单元
 >b1553time:Card_57_original_msg_parse_support.dll B1553TIME		#配置1553B时标解析单元
->msgkind:Card_57_original_msg_parse_support.dll MSGLENGTH		#配置消息长度解析单元
+>msglength:Card_57_original_msg_parse_support.dll MSGLENGTH		#配置消息长度解析单元
 >msgtype:Card_57_original_msg_parse_support.dll MSGTYPE			#配置消息类型解析单元
->msgtype:Card_57_original_msg_parse_support.dll MSCOUNT			#配置消息类型解析单元
+>msgcount:Card_57_original_msg_parse_support.dll MSCOUNT			#配置消息类型解析单元
 >dateparse:Code_mark_parse.dll WORD_3		
 >sumcalc:Code_mark_parse.dll WORD_1		
 >vector:Code_mark_parse.dll WORD_1					

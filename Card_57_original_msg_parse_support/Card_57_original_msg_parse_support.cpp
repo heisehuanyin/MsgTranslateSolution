@@ -219,7 +219,7 @@ int Card57_parse_support::EnumKeyWordsInner(char*** argsArrayOut, int* argsCount
 }
 
 
-int Card57_parse_support::GetPureMsgBody(const UWORD_i16* const msgBufin, UWORD_i16* bufferOut)
+int Card57_parse_support::GetPureMsgBody(const UWORD_i16* const msgBufin, UWORD_i16 ** bufferOut)
 {
 	return 0;
 }

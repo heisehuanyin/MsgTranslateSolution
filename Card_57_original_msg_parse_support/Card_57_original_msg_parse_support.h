@@ -24,7 +24,7 @@ public:
 	virtual int EnumKeyWordsInner(char*** argsArrayOut, int* argsCount);
 
 	//获取纯消息
-	virtual int GetPureMsgBody(const UWORD_i16* const msgBufin, UWORD_i16* bufferOut);
+	virtual int GetPureMsgBody(const UWORD_i16* const msgBufin, UWORD_i16 ** bufferOut);
 
 
 private:

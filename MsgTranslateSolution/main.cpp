@@ -8,7 +8,10 @@
 #include "StandardExtensionInterface.h"
 #include <Windows.h>
 #include "ExtensionLoader.h"
-
+#include "tinystr.h"
+#include "tinyxml.h"
+#include "ParseEnvironment.h"
+#include <string.h>
 
 
 
@@ -16,56 +19,84 @@
 //输入参数：argc，参数的个数
 //输入参数：argv，参数
 //格式范例： MsgTranslateSolution  /base xxxx.xml   /source xxxx.dat     /group dm_group
-//工作参数： 程序名称			   指明翻译基准		指明消息记录文件	 指明总线类别
+//工作参数： 程序名称					指明翻译基准		指明消息记录文件		指明总线类别
 //格式范例： MsgTranslateSolution  /help
-//求助参数： 程序名称			   需要命令行帮助
+//工作参数： 程序名称					需要命令行帮助
+//格式范例： MsgTranslateSolution  /expose
+//工作参数： 程序名称					指定行为，导出所有内部控制参数5
 void main(int argc, char** argv) {
 	//帮助选项，打印帮助内容
 	if (strcmp(*(argv + 1), "/help") == 0) {
-		printf("格式范例： MsgTranslateSolution  /base xxxx.xml   /source xxxx.dat     /group dm_group\n工作参数： 程序名称		指明翻译基准	指明消息记录文件	指明总线类别\n格式范例： MsgTranslateSolution  /help\n求助参数： 程序名称		需要命令行帮助\n");
+		printf("见程序注释，完成程序后再考虑添加");
 		return;
 	}
 
 	//帮助选项2，打印插件的所有选项
-	// 待完善
+	if (strcmp(*(argv + 1), "/expose") == 0) {
+		WIN32_FIND_DATAW ffd;
 
-	// loadPlug
-	char** ab = (char**)&"";
-	int ntemp = 0;
-	
-	//加载器全局有效，不会人为删除
-	//经由它加载的dll也不卸载，直到程序结束
-	ExtensionLoader loadTools = ExtensionLoader();
+		HANDLE hFind = FindFirstFile(L".\\*.dll", &ffd);
 
-	//------------------------------------------------------------------------------
-	StandardParseBaseSupportInterface* basep=NULL;
-	loadTools.LoadNewParseBaseExtension("Card_57_original_msg_parse_support.dll", ab, ntemp, &basep);
+		do {
+			if (!(ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
+				TCHAR szFile[MAX_PATH];
+				wprintf(L"%s\n\n", ffd.cFileName);
+				char ttmm[MAX_PATH] = "";
 
-	//获取关键字全过程
-	basep->EnumKeyWordsInner(&ab, &ntemp);
-	printf("开始打印\n");
-	for (int i = 0; i < ntemp; i++)
-	{
-		printf("%s\n", *(ab+i));
+
+				WideCharToMultiByte(CP_ACP, 0, ffd.cFileName, wcslen(ffd.cFileName), ttmm, MAX_PATH, 0, 0);
+
+				ExtensionLoader loadTools = ExtensionLoader();
+
+				AbstractPlugClass* basep = NULL;
+				int rtn = loadTools.LoadNewParseBaseExtension(ttmm, nullptr, 0, (StandardParseBaseSupportInterface**)&basep);
+
+				if (rtn == 2) {
+					rtn = loadTools.LoadNewParseEnhanceExtension(ttmm, nullptr, 0, (StandardExtensionInterface**)&basep);
+				}
+
+				char* ttmp = "";
+				char ** ab = nullptr;
+				int ntemp = 0;
+				basep->GetPlugTypeMsg(&ttmp);
+				printf("插件类型：%s\n", ttmp);
+
+				if (!strcmp(ttmp, "BaseSupport")) {
+					((StandardParseBaseSupportInterface*)basep)->EnumKeyWordsInner(&ab, &ntemp);
+					printf("内部参数:\n");
+					for (int i = 0; i < ntemp; i++) {
+						printf("  %d->\t%s %s\n", i, ttmm, *(ab + i));
+					}
+				}
+				else {
+					((StandardExtensionInterface*)basep)->EnumKeyWordsInner(&ab, &ntemp);
+					printf("内部参数:\n");
+					for (int i = 0; i < ntemp; i++) {
+						printf("  %d->\t%s %s\n", i, ttmm, *(ab + i));
+					}
+				}
+				printf("\n\n\n");
+			}
+
+		} while (FindNextFile(hFind, &ffd));
+
+		FindClose(hFind); // 关闭查找句柄
+
+		return;
 	}
 
-	//---------------------------------------------------------------------------
-	StandardExtensionInterface* pextension = NULL;
-	//loadTools.LoadNewParseEnhanceExtension("OneWordAs_float.dll", ab, ntemp, &pextension);
-	//loadTools.LoadNewParseEnhanceExtension("Code_mark_parse.dll", ab, ntemp, &pextension);
-	loadTools.LoadNewParseEnhanceExtension("TwoWordAs_union.dll", ab, ntemp, &pextension);
+	//正常工作，开始解析
+	if (strcmp(*(argv + 1), "/base") == 0 && strcmp(*(argv + 3), "/source") == 0) {
 
-	pextension->EnumKeyWordsInner(&ab, &ntemp);
-	printf("打印插件选项\n");
-	for (int i = 0; i < ntemp; i++)
-	{
-		printf("%s\n", *(ab + i));
+		//利用环境类管理相关变量，实现代码整洁
+		ParseUnit* parseUnit = new ParseUnit();
+
+
+		parseUnit->initSelf(*(argv + 2), *(argv + 4), NULL, NULL);
+		parseUnit->translateMsgAtNow();
 	}
-
-
-
-
 
 	return;
-
 }
+
+

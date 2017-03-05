@@ -1,0 +1,69 @@
+Card_57_original_msg_parse_support.dll
+
+插件类型：BaseSupport
+内部参数:
+  0->	Card_57_original_msg_parse_support.dll RTADDR
+  1->	Card_57_original_msg_parse_support.dll SUBADDR
+  2->	Card_57_original_msg_parse_support.dll MTSTATE
+  3->	Card_57_original_msg_parse_support.dll RTSTATE
+  4->	Card_57_original_msg_parse_support.dll MSGLENGTH
+  5->	Card_57_original_msg_parse_support.dll SYSTIME
+  6->	Card_57_original_msg_parse_support.dll B1553TIME
+  7->	Card_57_original_msg_parse_support.dll MSGTYPE
+  8->	Card_57_original_msg_parse_support.dll RTADDR_E
+  9->	Card_57_original_msg_parse_support.dll SUBADDR_E
+  10->	Card_57_original_msg_parse_support.dll RTSTATE_E
+  11->	Card_57_original_msg_parse_support.dll MSGCOUNT
+
+
+
+Code_mark_parse.dll
+
+插件类型：EnhancePlug
+内部参数:
+  0->	Code_mark_parse.dll WORD_1
+  1->	Code_mark_parse.dll WORD_2
+  2->	Code_mark_parse.dll WORD_3
+  3->	Code_mark_parse.dll WORD_4
+  4->	Code_mark_parse.dll WORD_5
+  5->	Code_mark_parse.dll WORD_6
+  6->	Code_mark_parse.dll WORD_7
+  7->	Code_mark_parse.dll WORD_8
+
+
+
+MsgHeadParse.dll
+
+插件类型：EnhancePlug
+内部参数:
+  0->	MsgHeadParse.dll DIRECT_HEX
+
+
+
+OneWordAs_float.dll
+
+插件类型：EnhancePlug
+内部参数:
+  0->	OneWordAs_float.dll NO_Proc
+  1->	OneWordAs_float.dll MULTIPLY_10
+  2->	OneWordAs_float.dll DIVIDE_10
+  3->	OneWordAs_float.dll MULTIPLY_100
+  4->	OneWordAs_float.dll DIVIDE_100
+  5->	OneWordAs_float.dll MULTIPLY_1000
+  6->	OneWordAs_float.dll DIVIDE_1000
+  7->	OneWordAs_float.dll MULTIPLY_10000
+  8->	OneWordAs_float.dll DIVIDE_10000
+
+
+
+TwoWordAs_union.dll
+
+插件类型：EnhancePlug
+内部参数:
+  0->	TwoWordAs_union.dll 2WORD_AS_float_HBIT_first
+  1->	TwoWordAs_union.dll 2WORD_AS_float_LBIT_first
+  2->	TwoWordAs_union.dll 2WORD_AS_int_HBIT_first
+  3->	TwoWordAs_union.dll 2WORD_AS_int_LBIT_first
+
+
+
