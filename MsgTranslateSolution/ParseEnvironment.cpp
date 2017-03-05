@@ -142,8 +142,9 @@ int ParseUnit::LoadCmdEnterPoint() {
 	while (cmdOne != NULL) {
 		char cmdandrel[2048] = "";
 		sprintf_s(cmdandrel, 2000, "%s", cmdOne->Attribute("rel"));
-		char * cmd = nullptr;
-		strtok_s(cmdandrel, " ", &cmd);
+		char* cmd = nullptr;
+		char* cmdtemp = nullptr;
+		cmd = strtok_s(cmdandrel, " ", &cmdtemp);
 		this->CollectCmdEnterPoint(cmdOne->Value(), cmdOne->Attribute("rel"));
 
 

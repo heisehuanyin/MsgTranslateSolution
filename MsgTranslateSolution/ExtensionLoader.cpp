@@ -22,7 +22,6 @@ int ExtensionLoader::LoadNewParseBaseExtension(const char* const libraryName, ch
 	//加载一个底层解析支持包
 	HMODULE hdll = LoadLibrary(A2W(libraryName));
 	if (hdll == NULL) { 
-		FreeLibrary(hdll);
 		return 1;
 	}
 
@@ -51,7 +50,6 @@ int ExtensionLoader::LoadNewParseEnhanceExtension(const char* const libraryName,
 	//加载一个处理总线消息的拓展包
 	HMODULE hdll_e = LoadLibrary(A2W(libraryName));
 	if (hdll_e == NULL) {
-		FreeLibrary(hdll_e);
 		return 1;
 	}
 

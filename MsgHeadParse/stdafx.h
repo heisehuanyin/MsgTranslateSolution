@@ -11,6 +11,7 @@
 // Windows Header Files:
 #include <windows.h>
 
+#define STDINTERFACE_EXPORTS 1
 
 
 // TODO: reference additional headers your program requires here

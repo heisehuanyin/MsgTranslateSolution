@@ -12,6 +12,6 @@ public:
 	virtual int ProcessMsgUnit(const UWORD_i16* const ptr_value_first, const char* const args, char** bufferOut);
 
 private:
-	char* argsItem[8];
+	char* argsItem[20];
 };
 

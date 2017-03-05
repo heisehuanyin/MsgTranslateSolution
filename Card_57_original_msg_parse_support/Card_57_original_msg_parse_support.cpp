@@ -1,6 +1,4 @@
-﻿#define STDINTERFACE_EXPORTS 1
-
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "targetver.h"
 #include "Card_57_original_msg_parse_support.h"
 #include "../MsgTranslateSolution/Macro_Global.h"

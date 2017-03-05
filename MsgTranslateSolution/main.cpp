@@ -39,7 +39,6 @@ void main(int argc, char** argv) {
 
 		do {
 			if (!(ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
-				TCHAR szFile[MAX_PATH];
 				wprintf(L"%s\n\n", ffd.cFileName);
 				char ttmm[MAX_PATH] = "";
 

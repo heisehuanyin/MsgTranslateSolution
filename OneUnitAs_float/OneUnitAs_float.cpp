@@ -1,5 +1,3 @@
-#define STDINTERFACE_EXPORTS 1
-
 // OneUnitAs_float.cpp : 定义 DLL 应用程序的导出函数。
 //
 

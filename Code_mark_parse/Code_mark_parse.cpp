@@ -5,7 +5,6 @@
 #include "../MsgTranslateSolution/StandardExtensionInterface.h"
 #include <stdio.h>
 
-#define STDINTERFACE_EXPORTS
 
 
 CodeMarkProcess::CodeMarkProcess()

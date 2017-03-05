@@ -6,7 +6,7 @@
 
 int main()
 {
-	FILE* binaryFile = NULL;
+	FILE* binaryFile = nullptr;
 	
 	fopen_s(&binaryFile,"..\\Debug\\busmsg_simulate_datafile.dat","wb");
 
@@ -221,7 +221,7 @@ int main()
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
 			//两个字代表一个浮点数 45.6，高字节在前
-			ls.fdata = 45.6;
+			ls.fdata =(float) 45.6;
 
 			ttss = ls.sdata[0];
 			fwrite(&ttss, sizeof(char), 2, binaryFile);

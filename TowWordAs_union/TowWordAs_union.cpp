@@ -1,4 +1,3 @@
-#define STDINTERFACE_EXPORTS 1
 
 // TowWordAs_union.cpp : Defines the exported functions for the DLL application.
 //
