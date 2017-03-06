@@ -36,7 +36,7 @@ private:
 	virtual int GetMsgFromCache(UWORD_i16** original_msg);
 
 	//核对所有的总线协议，解析一条消息
-	virtual int FindRuleAdaptAndTranslate(TiXmlElement* supperPattern, TiXmlElement* supperParseRule, const UWORD_i16 * const msg_in);
+	virtual int FindRuleAdaptAndTranslate(TiXmlElement* supperPattern, TiXmlElement* supperParseRule, UWORD_i16 * const msg_in);
 
 	//收集加载过程中获得的插件
 	virtual int CollectPlugIn(const char* const PlugName, StandardExtensionInterface* WrapperIn);
@@ -58,7 +58,7 @@ private:
 	virtual int CollectCmdEnterPoint(const char* const CmdName, const char* const libraryKeyAndArgs);
 
 	//处理纯粹的总线消息
-	virtual int ProcPureMsgSection(TiXmlElement * pureMsgRuleCollect, const UWORD_i16 * const msg_in);//解析纯粹总线消息
+	virtual int ProcPureMsgSection(TiXmlElement * pureMsgRuleCollect, UWORD_i16 * const msg_in);//解析纯粹总线消息
 
 
 	//翻译相关解析底层包基础键值
@@ -88,7 +88,7 @@ private:
 
 
 	//核对是否符合总线解析规则
-	virtual bool CheckCriterion(const char* const tagName, const char* const Msgindex, const char* const valCertain, const UWORD_i16* const msg_in);
+	virtual bool CheckCriterion(const char* const tagName, const char* const Msgindex, const char* const valCertain, UWORD_i16 * const msg_in);
 
 
 

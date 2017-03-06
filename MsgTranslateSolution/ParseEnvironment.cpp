@@ -186,7 +186,7 @@ int ParseUnit::GetMsgFromCache(UWORD_i16** original_msg) {
 }
 
 
-bool ParseUnit::CheckCriterion(const char* const tagName, const char* const Msgindex, const char* const valCertain, const UWORD_i16* const msg_in) {
+bool ParseUnit::CheckCriterion(const char* const tagName, const char* const Msgindex, const char* const valCertain, UWORD_i16 * const msg_in) {
 	
 	string keyandargs = this->cmdEnterpointContainer[tagName];
 	string key = keyandargs.substr(0, keyandargs.find_first_of(" "));
@@ -216,7 +216,7 @@ bool ParseUnit::CheckCriterion(const char* const tagName, const char* const Msgi
 }
 
 
-int ParseUnit::ProcPureMsgSection(TiXmlElement * pureMsgRuleCollect, const UWORD_i16 * const msg_in) {
+int ParseUnit::ProcPureMsgSection(TiXmlElement * pureMsgRuleCollect, UWORD_i16 * const msg_in) {
 	UWORD_i16 * puremsg = nullptr;
 	
 	this->basep->GetPureMsgBody(msg_in, &puremsg);
@@ -259,7 +259,7 @@ int ParseUnit::translateMsgAtNow() {
 }
 
 
-int ParseUnit::FindRuleAdaptAndTranslate(TiXmlElement* patternCollect, TiXmlElement* parseRuleCollect, const UWORD_i16 * const msg_in) {
+int ParseUnit::FindRuleAdaptAndTranslate(TiXmlElement* patternCollect, TiXmlElement* parseRuleCollect, UWORD_i16 * const msg_in) {
 	TiXmlElement* elelm = patternCollect->FirstChildElement();
 	int fitTimes = 0;
 

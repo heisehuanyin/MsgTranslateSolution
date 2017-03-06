@@ -2,6 +2,7 @@
 
 #include "../MsgTranslateSolution/StandardParseBaseSupportInterface.h"
 #include "../MsgTranslateSolution/Macro_Global.h"
+#include "DataFileAccess.h"
 
 
 
@@ -24,7 +25,7 @@ public:
 	virtual int EnumKeyWordsInner(char*** argsArrayOut, int* argsCount);
 
 	//获取纯消息
-	virtual int GetPureMsgBody(const UWORD_i16* const msgBufin, UWORD_i16 ** bufferOut);
+	virtual int GetPureMsgBody(UWORD_i16 * const msgBufin, UWORD_i16 ** bufferOut);
 
 
 private:
@@ -35,4 +36,7 @@ private:
 public:
 	int GetOneOriginalMsg(UWORD_i16** bufferOut);
 	virtual int OpenBinaryDataFile(const char* const filePath);
+private:
+	char content[2048];
+	DataFileAccess* binaryFile;
 };

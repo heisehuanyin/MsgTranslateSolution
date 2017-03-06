@@ -36,7 +36,7 @@ public:
 
 	// 将纯消息内容从原始消息中提取出来。插件需要自行解决字符串指针，
 	//			传出来之后，需要长期保存指针值，不能直接释放掉
-	virtual int GetPureMsgBody(const UWORD_i16* const msgBufin, UWORD_i16 ** bufferOut) = 0;
+	virtual int GetPureMsgBody(UWORD_i16 * const msgBufin, UWORD_i16 ** bufferOut) = 0;
 
 	virtual int GetPlugTypeMsg(char ** bufferOut) {
 		*bufferOut = "BaseSupport";
