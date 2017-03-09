@@ -81,11 +81,6 @@ private:
 	const char* parseBaseDocPath;
 
 
-	////////////////////////////////////////////---------------------------------------------------
-	virtual int SetPureMsg(const UWORD_i16* const PureMsg);
-
-	
-
 
 	//核对是否符合总线解析规则
 	virtual bool CheckCriterion(const char* const tagName, const char* const Msgindex, const char* const valCertain, UWORD_i16 * const msg_in);
@@ -93,5 +88,6 @@ private:
 
 
 	ParseEnviroments* prsEnv;
+	int fitTimes;
 };
 

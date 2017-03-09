@@ -1,69 +1,80 @@
+导出的界面中，输出格式范例中为整数的都是可以用来做判据的，默认十六进制，具体请咨询作者 
 Card_57_original_msg_parse_support.dll
 
 插件类型：BaseSupport
-内部参数:
-  0->	Card_57_original_msg_parse_support.dll RTADDR
-  1->	Card_57_original_msg_parse_support.dll SUBADDR
-  2->	Card_57_original_msg_parse_support.dll MTSTATE
-  3->	Card_57_original_msg_parse_support.dll RTSTATE
-  4->	Card_57_original_msg_parse_support.dll MSGLENGTH
-  5->	Card_57_original_msg_parse_support.dll SYSTIME
-  6->	Card_57_original_msg_parse_support.dll B1553TIME
-  7->	Card_57_original_msg_parse_support.dll MSGTYPE
-  8->	Card_57_original_msg_parse_support.dll RTADDR_E
-  9->	Card_57_original_msg_parse_support.dll SUBADDR_E
-  10->	Card_57_original_msg_parse_support.dll RTSTATE_E
-  11->	Card_57_original_msg_parse_support.dll MSGCOUNT
+提供输入内容：0xfffffffffff…………ffffff
+
+内部参数与输出范式:
+  0->	Card_57_original_msg_parse_support.dll RTADDR 			 输出：1f
+  1->	Card_57_original_msg_parse_support.dll SUBADDR 			 输出：f
+  2->	Card_57_original_msg_parse_support.dll MTSTATE 			 输出：ffff
+  3->	Card_57_original_msg_parse_support.dll RTSTATE 			 输出：ffff
+  4->	Card_57_original_msg_parse_support.dll MSGLENGTH 			 输出：1f
+  5->	Card_57_original_msg_parse_support.dll SYSTIME 			 输出：ffffffff
+  6->	Card_57_original_msg_parse_support.dll B1553TIME 			 输出：ffff
+  7->	Card_57_original_msg_parse_support.dll MSGTYPE 			 输出：1
+  8->	Card_57_original_msg_parse_support.dll RTADDR_E 			 输出：N/A
+  9->	Card_57_original_msg_parse_support.dll SUBADDR_E 			 输出：N/A
+  10->	Card_57_original_msg_parse_support.dll RTSTATE_E 			 输出：N/A
+  11->	Card_57_original_msg_parse_support.dll MSGCOUNT 			 输出：ffffffff
 
 
 
 Code_mark_parse.dll
 
 插件类型：EnhancePlug
-内部参数:
-  0->	Code_mark_parse.dll WORD_1
-  1->	Code_mark_parse.dll WORD_2
-  2->	Code_mark_parse.dll WORD_3
-  3->	Code_mark_parse.dll WORD_4
-  4->	Code_mark_parse.dll WORD_5
-  5->	Code_mark_parse.dll WORD_6
-  6->	Code_mark_parse.dll WORD_7
-  7->	Code_mark_parse.dll WORD_8
+提供输入内容：0xfffffffffff…………ffffff
+
+内部参数与输出范式:
+  0->	Code_mark_parse.dll WORD_1 			 输出：ffff
+  1->	Code_mark_parse.dll WORD_2 			 输出：ffffffff
+  2->	Code_mark_parse.dll WORD_3 			 输出：ffffffffffff
+  3->	Code_mark_parse.dll WORD_4 			 输出：ffffffffffffffff
+  4->	Code_mark_parse.dll WORD_5 			 输出：ffffffffffffffffffff
+  5->	Code_mark_parse.dll WORD_6 			 输出：ffffffffffffffffffffffff
+  6->	Code_mark_parse.dll WORD_7 			 输出：ffffffffffffffffffffffffffff
+  7->	Code_mark_parse.dll WORD_8 			 输出：ffffffffffffffffffffffffffffffff
 
 
 
 MsgHeadParse.dll
 
 插件类型：EnhancePlug
-内部参数:
-  0->	MsgHeadParse.dll DIRECT_HEX
+提供输入内容：0xfffffffffff…………ffffff
+
+内部参数与输出范式:
+  0->	MsgHeadParse.dll DIRECT_HEX 			 输出：ffff
 
 
 
 OneWordAs_float.dll
 
 插件类型：EnhancePlug
-内部参数:
-  0->	OneWordAs_float.dll NO_Proc
-  1->	OneWordAs_float.dll MULTIPLY_10
-  2->	OneWordAs_float.dll DIVIDE_10
-  3->	OneWordAs_float.dll MULTIPLY_100
-  4->	OneWordAs_float.dll DIVIDE_100
-  5->	OneWordAs_float.dll MULTIPLY_1000
-  6->	OneWordAs_float.dll DIVIDE_1000
-  7->	OneWordAs_float.dll MULTIPLY_10000
-  8->	OneWordAs_float.dll DIVIDE_10000
+提供输入内容：0xfffffffffff…………ffffff
+
+内部参数与输出范式:
+  0->	OneWordAs_float.dll NO_Proc 			 输出：65535.000000
+  1->	OneWordAs_float.dll MULTIPLY_10 			 输出：655350.000000
+  2->	OneWordAs_float.dll DIVIDE_10 			 输出：6553.500000
+  3->	OneWordAs_float.dll MULTIPLY_100 			 输出：655350.000000
+  4->	OneWordAs_float.dll DIVIDE_100 			 输出：655.349976
+  5->	OneWordAs_float.dll MULTIPLY_1000 			 输出：655350.000000
+  6->	OneWordAs_float.dll DIVIDE_1000 			 输出：65.534996
+  7->	OneWordAs_float.dll MULTIPLY_10000 			 输出：655350.000000
+  8->	OneWordAs_float.dll DIVIDE_10000 			 输出：6.553500
 
 
 
 TwoWordAs_union.dll
 
 插件类型：EnhancePlug
-内部参数:
-  0->	TwoWordAs_union.dll 2WORD_AS_float_HBIT_first
-  1->	TwoWordAs_union.dll 2WORD_AS_float_LBIT_first
-  2->	TwoWordAs_union.dll 2WORD_AS_int_HBIT_first
-  3->	TwoWordAs_union.dll 2WORD_AS_int_LBIT_first
+提供输入内容：0xfffffffffff…………ffffff
+
+内部参数与输出范式:
+  0->	TwoWordAs_union.dll 2WORD_AS_float_HBIT_first 			 输出：-nan
+  1->	TwoWordAs_union.dll 2WORD_AS_float_LBIT_first 			 输出：-nan
+  2->	TwoWordAs_union.dll 2WORD_AS_int_HBIT_first 			 输出：-1
+  3->	TwoWordAs_union.dll 2WORD_AS_int_LBIT_first 			 输出：-1
 
 
 

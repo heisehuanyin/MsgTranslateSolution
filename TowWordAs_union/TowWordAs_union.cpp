@@ -34,7 +34,7 @@ int TwoWordAs_union::EnumKeyWordsInner(char*** argsArrayOut, int* argsCount)
 }
 
 
-int TwoWordAs_union::ProcessMsgUnit(const UWORD_i16* const ptr_value_first, const char* const args, char** bufferOut)
+int TwoWordAs_union::ProcessMsgUnitAsHexOrStr(const UWORD_i16* const ptr_value_first, const char* const args, char** bufferOut)
 {
 	char temp[2048] = "";
 
@@ -58,28 +58,28 @@ int TwoWordAs_union::ProcessMsgUnit(const UWORD_i16* const ptr_value_first, cons
 				case 0:
 					cov_f.mvalue[0] = *ptr_value_first;
 					cov_f.mvalue[1] = *(ptr_value_first+1);
-					sprintf_s(*bufferOut, 20, "%f", cov_f.fvalue);
+					sprintf_s(this->content, 200, "%f", cov_f.fvalue);
 					break;
 				case 1:
 					cov_f.mvalue[1] = *ptr_value_first;
 					cov_f.mvalue[0] = *(ptr_value_first + 1);
-					sprintf_s(*bufferOut, 20, "%f", cov_f.fvalue);
+					sprintf_s(this->content, 200, "%f", cov_f.fvalue);
 					break;
 				case 2:
 					cov_i.mvalue[0] = *ptr_value_first;
 					cov_i.mvalue[1] = *(ptr_value_first + 1);
-					sprintf_s(*bufferOut, 20, "%d", cov_i.ivalue);
+					sprintf_s(this->content, 200, "%d", cov_i.ivalue);
 					break;
 				case 3:
 					cov_i.mvalue[1] = *ptr_value_first;
 					cov_i.mvalue[0] = *(ptr_value_first + 1);
-					sprintf_s(*bufferOut, 20, "%d", cov_i.ivalue);
+					sprintf_s(this->content, 200, "%d", cov_i.ivalue);
 					break;
 				default:
 					break;
 			}
 
-
+			*bufferOut = this->content;
 			return 0;
 		}
 	}

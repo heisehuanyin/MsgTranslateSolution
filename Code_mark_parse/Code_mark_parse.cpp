@@ -33,9 +33,11 @@ int CodeMarkProcess::EnumKeyWordsInner(char*** argsArrayOut, int* argsCount)
 }
 
 
-int CodeMarkProcess::ProcessMsgUnit(const UWORD_i16* const ptr_value_first, const char* const args, char** bufferOut)
+int CodeMarkProcess::ProcessMsgUnitAsHexOrStr(const UWORD_i16* const ptr_value_first, const char* const args, char** bufferOut)
 {
-	char temp[2048] = "";
+	for (int i = 0; i < 200; i++) {
+		this->content[i] = NULL;
+	}
 
 	for (int i = 0; i < 8; i++)
 	{
@@ -43,10 +45,11 @@ int CodeMarkProcess::ProcessMsgUnit(const UWORD_i16* const ptr_value_first, cons
 		{
 			for (int is = 0; is < i+1; is++)
 			{
-				sprintf_s(temp, 200, "%s%x", temp,*(ptr_value_first + is));
+				sprintf_s(this->content, 200, "%s%x", this->content, *(ptr_value_first + is));
 			}
 
-			sprintf_s(*bufferOut, 200, "%s", temp);
+			*bufferOut = this->content;
+
 			return 0;
 		}
 	}

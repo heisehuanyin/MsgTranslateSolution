@@ -28,7 +28,7 @@ public:
 	virtual ~StandardExtensionInterface() {}; 
 
 	// 通过此函数更好的处理消息翻译问题，传递参数是第一个待处理消息字第一个字的指针,传出参数为翻译的消息结果
-	virtual int ProcessMsgUnit(const UWORD_i16* const ptr_value_first, const char* const args, char** bufferOut) = 0;
+	virtual int ProcessMsgUnitAsHexOrStr(const UWORD_i16* const ptr_value_first, const char* const args, char** bufferOut) = 0;
 
 	// 列举所有可选参数
 	virtual int EnumKeyWordsInner(char*** argsArrayOut, int* argsCount) = 0;

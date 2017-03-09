@@ -35,10 +35,12 @@ int OneWordAs_float::EnumKeyWordsInner(char*** argsArrayOut, int* argsCount)
 }
 
 
-int OneWordAs_float::ProcessMsgUnit(const UWORD_i16* const ptr_value_first, const char* const args, char** bufferOut)
+int OneWordAs_float::ProcessMsgUnitAsHexOrStr(const UWORD_i16* const ptr_value_first, const char* const args, char** bufferOut)
 {
 	float fvalue = *ptr_value_first;
-	char temp[2048] = "";
+	for (int is = 0; is < 200; ++is) {
+		this->content[is] = NULL;
+	}
 
 	for (int i = 0; i < 9; i++)
 	{
@@ -57,8 +59,9 @@ int OneWordAs_float::ProcessMsgUnit(const UWORD_i16* const ptr_value_first, cons
 
 			}
 
-			sprintf_s(temp, 20, "%f", fvalue);
-			sprintf_s(*bufferOut,20,"%s",temp);
+			sprintf_s(this->content, 200, "%f", fvalue);
+			
+			*bufferOut = this->content;
 
 			return 0;
 		}

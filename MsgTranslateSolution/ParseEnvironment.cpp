@@ -19,7 +19,7 @@ ParseUnit::ParseUnit()
 	, outputFilePtr(NULL)
 	, OriginalMsgCache(NULL)
 	, patternCollect(NULL)
-	, parseRuleCollect(NULL), prsEnv(NULL) {}
+	, parseRuleCollect(NULL), prsEnv(NULL), fitTimes(0) {}
 
 
 int ParseUnit::initSelf(const char* const parseBase, const char* const binaryDataFile, const char* const strictString, const char* const outputFile) {
@@ -28,7 +28,7 @@ int ParseUnit::initSelf(const char* const parseBase, const char* const binaryDat
 	this->StrictStr = strictString;
 
 	this->doc = new TiXmlDocument(parseBaseDocPath);
-	this->doc->LoadFile();
+	this->doc->LoadFile(TIXML_ENCODING_LEGACY);
 
 	//创建插件加载器
 	this->loadTools = new ExtensionLoader();
@@ -52,9 +52,6 @@ int ParseUnit::SetOriginalMsg(UWORD_i16 * const OriginalMsg) {
 
 
 
-int ParseUnit::SetPureMsg(const UWORD_i16* const PureMsg) {
-	return 0;
-}
 
 
 int ParseUnit::CollectPlugIn(const char* const PlugName, StandardExtensionInterface* WrapperIn) {
@@ -188,6 +185,10 @@ int ParseUnit::GetMsgFromCache(UWORD_i16** original_msg) {
 
 bool ParseUnit::CheckCriterion(const char* const tagName, const char* const Msgindex, const char* const valCertain, UWORD_i16 * const msg_in) {
 	
+	if (!strcmp(valCertain,"not")) {
+		return true;
+	}
+
 	string keyandargs = this->cmdEnterpointContainer[tagName];
 	string key = keyandargs.substr(0, keyandargs.find_first_of(" "));
 	string args = keyandargs.substr(keyandargs.find_first_of(" ") + 1);
@@ -205,9 +206,8 @@ bool ParseUnit::CheckCriterion(const char* const tagName, const char* const Msgi
 		wrapper->GetKeyValueFromMsg(puremsg+index, args.c_str(), &val);
 
 	}
-
-	int valpre = atoi(valCertain);
-	int valafter = atoi(val);
+	int valpre = strtol(valCertain, NULL, 16);
+	int valafter = strtol(val, NULL, 16);
 	if (valpre == valafter) {
 		return true;
 	}
@@ -218,8 +218,42 @@ bool ParseUnit::CheckCriterion(const char* const tagName, const char* const Msgi
 
 int ParseUnit::ProcPureMsgSection(TiXmlElement * pureMsgRuleCollect, UWORD_i16 * const msg_in) {
 	UWORD_i16 * puremsg = nullptr;
-	
-	this->basep->GetPureMsgBody(msg_in, &puremsg);
+	TiXmlElement* oneParseRule = pureMsgRuleCollect->FirstChildElement();
+
+	while (oneParseRule != NULL) {
+		const char* tag_name = oneParseRule->Value();
+		const char* v_index = oneParseRule->Attribute("index");
+		const char* v_name = oneParseRule->Attribute("name");
+
+		int v_i = atoi(v_index);
+		if (!strcmp(v_name, "default")) {
+			v_name = tag_name;
+		}
+		
+		string keyandargs = this->cmdEnterpointContainer[tag_name];
+		string key = keyandargs.substr(0, keyandargs.find_first_of(" "));
+		string args = keyandargs.substr(keyandargs.find_first_of(" ") + 1);
+		char* val = "";
+
+		PlugWrapper* wrapper = this->wrapperContainer[key];
+		wrapper->GetKeyValueFromMsg(msg_in + v_i, args.c_str(), &val);
+
+		if (this->outputFilePtr == NULL) {
+			printf("%s:%s\t", v_name , val);
+		}
+		else {
+			fprintf_s(this->outputFilePtr, "%s:%s\t", v_name, val);
+		}
+
+		oneParseRule = oneParseRule->NextSiblingElement();
+	}
+
+	if (this->outputFilePtr == NULL) {
+		printf("\n\n");
+	}
+	else {
+		fprintf_s(this->outputFilePtr, "\n\n");
+	}
 
 	return 0;
 }
@@ -233,8 +267,8 @@ int ParseUnit::MsgBasicParse(const UWORD_i16* const msg_in) {
 
 	char* value = nullptr;
 	for (int i = 0; i < num; i++) {
-		this->basep->GetKeyWords(msg_in, *(keywords + i), &value);
-
+		this->basep->GetKeyWordsAsHexOrStr(msg_in, *(keywords + i), &value);
+		
 		if (this->outputFilePtr == NULL) {
 			printf("%s:%s\t", *(keywords + i), value);
 		}
@@ -253,7 +287,11 @@ int ParseUnit::translateMsgAtNow() {
 
 	while (this->GetMsgFromCache(&msg_out) != -1) {
 		this->MsgBasicParse(msg_out);
+		this->fitTimes = 0;//重置统计标志量
 		this->FindRuleAdaptAndTranslate(this->patternCollect, this->parseRuleCollect, msg_out);
+		if (this->fitTimes != 1) {
+			printf("\n解析失败，未发现适配的解析规则(0)或者多次适配，解析规则存在歧义(>1)，适配次数:%d\n\n",  this->fitTimes);
+		}
 	}
 	return 0;
 }
@@ -261,10 +299,9 @@ int ParseUnit::translateMsgAtNow() {
 
 int ParseUnit::FindRuleAdaptAndTranslate(TiXmlElement* patternCollect, TiXmlElement* parseRuleCollect, UWORD_i16 * const msg_in) {
 	TiXmlElement* elelm = patternCollect->FirstChildElement();
-	int fitTimes = 0;
+	const char* tagname = elelm->Value();
 
 	while (elelm != NULL) {
-		const char* tagname = elelm->Value();
 		const char* varIndex = elelm->Attribute("index");
 		TiXmlElement* oneRuleAdapted = parseRuleCollect->FirstChildElement();
 
@@ -273,17 +310,19 @@ int ParseUnit::FindRuleAdaptAndTranslate(TiXmlElement* patternCollect, TiXmlElem
 
 			if (this->CheckCriterion(tagname, varIndex, target_value, msg_in)) {
 				if (elelm->NoChildren()) {
-					this->ProcPureMsgSection(oneRuleAdapted, msg_in);
-					fitTimes += 1;
+					UWORD_i16* msg_t = nullptr;
+					this->basep->GetPureMsgBody(msg_in, &msg_t);
+					this->ProcPureMsgSection(oneRuleAdapted, msg_t);
+					this->fitTimes += 1;
 				}
 				else {
 					this->FindRuleAdaptAndTranslate(elelm, oneRuleAdapted, msg_in);
 				}
+				if (this->fitTimes > 1) {
+					printf("%s:第%d 次出现", elelm->Value(), this->fitTimes);
+				}
 			}
 			oneRuleAdapted = oneRuleAdapted->NextSiblingElement();
-		}
-		if (fitTimes != 1) {
-			printf("解析失败，未发现适配的解析规则(0)或者多次适配，解析规则存在歧义(>1)，节点：%s,适配次数:%d\n", tagname, fitTimes);
 		}
 		elelm = elelm->NextSiblingElement();
 	}

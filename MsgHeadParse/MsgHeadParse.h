@@ -12,6 +12,8 @@ private:
 	char* argsItem[20];
 public:
 	virtual int EnumKeyWordsInner(char*** argsArrayOut, int* argsCount);
-	virtual int ProcessMsgUnit(const UWORD_i16* const ptr_value_first, const char* const args, char** bufferOut);
+	virtual int ProcessMsgUnitAsHexOrStr(const UWORD_i16* const ptr_value_first, const char* const args, char** bufferOut);
+private:
+	char content[20];
 };
 

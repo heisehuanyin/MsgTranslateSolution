@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MsgTranslateSolution", "MsgTranslateSolution\MsgTranslateSolution.vcxproj", "{83739431-0569-452E-943E-28BA26EE35F0}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -19,13 +19,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		ParseConfigration.xml = ParseConfigration.xml
 		ReadMe.txt = ReadMe.txt
 		Source.parserule = Source.parserule
-		导出集成平台的所有插件以及接口参数.bat = 导出集成平台的所有插件以及接口参数.bat
+		导出平台的所有接口参数.bat = 导出平台的所有接口参数.bat
 		程序利用dll拓展能力说明.txt = 程序利用dll拓展能力说明.txt
+		运行解析示例数据.bat = 运行解析示例数据.bat
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OneWordAs_float", "OneUnitAs_float\OneUnitAs_float.vcxproj", "{260DA40E-4188-4BBC-9D31-8AF335877433}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Card_57_original_msg_parse_support", "Card_57_original_msg_parse_support\Card_57_original_msg_parse_support.vcxproj", "{EB1075BE-1AD7-49A6-BD0A-E9149A443F0A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Card_XX_original_msg_parse_support", "Card_57_original_msg_parse_support\Card_57_original_msg_parse_support.vcxproj", "{EB1075BE-1AD7-49A6-BD0A-E9149A443F0A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Code_mark_parse", "Code_mark_parse\Code_mark_parse.vcxproj", "{4D2C8142-F9C2-45BE-88BC-0215C4465042}"
 EndProject

@@ -26,7 +26,7 @@ public:
 	// 输入参数：argv，传入的字符串数组,存储传入的参数。
 	// 输入参数：bufferOut,处理后得到的内容通过此缓存区传出。插件需要自行解决字符串指针，
 	//			传出来之后，需要长期保存指针值，不能直接释放掉
-	virtual int GetKeyWords(const UWORD_i16* const msgArray , const char* const argv, char** bufferOut) = 0;
+	virtual int GetKeyWordsAsHexOrStr(const UWORD_i16* const msgArray , const char* const argv, char** bufferOut) = 0;
 
 	// 提取基础解析服务模块所提供的所有消息解析方式
 	// 输入参数：argsArrayOut,获取本模块提供的解析服务的所有方式。插件需要自行解决字符串指针，

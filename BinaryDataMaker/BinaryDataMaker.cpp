@@ -12,32 +12,25 @@ int main()
 
 	int msgCount = -1;
 
-	while (msgCount < 20)
+	while (msgCount < 240000)
 	{
 		++msgCount;
-		printf("Now,the %dth rows data has been made.\n", msgCount);
-		int ttss = 0xaa55aa55;
+		//printf("Now,the %dth rows data has been made.\n", msgCount);
+		int ttss = 0x55aa55aa;
+
 		fwrite(&ttss, sizeof(char), 4, binaryFile);
 
-		int tttemp = (msgCount & 0xff) << 24;//帧计数
-		tttemp = ((msgCount & 0xff00) << 8 ) | tttemp;
-		tttemp = ((msgCount & 0xff0000) >> 8) | tttemp;
-		tttemp = ((msgCount & 0xff000000) >> 24) | tttemp;
-		fwrite(&tttemp, sizeof(char), 4, binaryFile);
+		fwrite(&msgCount, sizeof(char), 4, binaryFile);
 
 		int sddd = 222052360;//系统时标
-		tttemp = (sddd & 0xff) << 24;
-		tttemp = ((sddd & 0xff00) << 8) | tttemp;
-		tttemp = ((sddd & 0xff0000) >> 8) | tttemp;
-		tttemp = ((sddd & 0xff000000) >> 24) | tttemp;
-		fwrite(&tttemp, sizeof(char), 4, binaryFile);
+		fwrite(&sddd, sizeof(char), 4, binaryFile);
 
 		//MT状态字
-		ttss = 0x0081;
+		ttss = 0x8100;
 		fwrite(&ttss, sizeof(char), 2, binaryFile);
 
 		//1553B时标
-		ttss = 0x3979;
+		ttss = 0x7939;
 		fwrite(&ttss, sizeof(char), 2, binaryFile);
 
 		//数据指针
@@ -56,7 +49,7 @@ int main()
 		switch (msgCount % 4)
 		{
 		case 0://BC->RT
-			ttss = 0x2578;
+			ttss = 0x7825;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 			//purmsg====================================================
 			ttss = 0x0a01;
@@ -72,18 +65,19 @@ int main()
 			ttss = 0x1253;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x7825;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
 			////////////////////////////////////////////////////////////////
-			ttss = 0x0078;
+			ttss = 0x7800;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
+			break;
 		case 1://RT->RT
-			ttss = 0x6051;
+			ttss = 0x5160;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
-			ttss = 0xc00c;
+			ttss = 0x0cc0;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
-			ttss = 0xdbfe;
+			ttss = 0xfedb;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 			//purmsg===========================================
 
@@ -125,91 +119,93 @@ int main()
 
 
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+
+			ttss = 0x0000; 
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
 			//////////////////////////////////////////////////////////////////
-			ttss = 0x0078;
+			ttss = 0x7800;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
+			break;
 		case 2://RT->BC
-			ttss = 0x4054;
+			ttss = 0x5440;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
-			ttss = 0x0050;
+			ttss = 0x5000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 			//purmsg===========================================
 
@@ -248,91 +244,91 @@ int main()
 
 
 
-
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
-			ttss = 0x2578;
+			ttss = 0x0000;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 
 			//////////////////////////////////////////////////////////////////
-
+			break;
 		default://矢量字
-			ttss = 0x107c;
+			ttss = 0x7c10;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
-			ttss = 0x0078;
+			ttss = 0x7800;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);
 			ttss = 0x0022;
 			fwrite(&ttss, sizeof(char), 2, binaryFile);

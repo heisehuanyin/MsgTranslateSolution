@@ -52,25 +52,35 @@ void main(int argc, char** argv) {
 
 
 
+				unsigned short mmmsg[2000] = { 0 };
+				for (int ipip = 0; ipip < 2000; ipip++) {
+					mmmsg[ipip] = 0xffff;
+				}
 
 				char* ttmp = "";
+				char* temp = nullptr;
 				char ** ab = nullptr;
 				int ntemp = 0;
 				basep->GetPlugTypeMsg(&ttmp);
 
 				printf("插件类型：%s\n", ttmp);
+				printf("提供输入内容：0xfffffffffff…………ffffff\n\n");
 				if (!strcmp(ttmp, "BaseSupport")) {
 					((StandardParseBaseSupportInterface*)basep)->EnumKeyWordsInner(&ab, &ntemp);
-					printf("内部参数:\n");
+					printf("内部参数与输出范式:\n");
 					for (int i = 0; i < ntemp; i++) {
-						printf("  %d->\t%s %s\n", i, ttmm, *(ab + i));
+						((StandardParseBaseSupportInterface*)basep)->GetKeyWordsAsHexOrStr(mmmsg, *(ab + i), &temp);
+
+						printf("  %d->\t%s %s \t\t\t 输出：%s\n", i, ttmm, *(ab + i),temp);
 					}
 				}
 				else {
 					((StandardExtensionInterface*)basep)->EnumKeyWordsInner(&ab, &ntemp);
-					printf("内部参数:\n");
+					printf("内部参数与输出范式:\n");
 					for (int i = 0; i < ntemp; i++) {
-						printf("  %d->\t%s %s\n", i, ttmm, *(ab + i));
+						((StandardExtensionInterface*)basep)->ProcessMsgUnitAsHexOrStr(mmmsg, *(ab + i), &temp);
+
+						printf("  %d->\t%s %s \t\t\t 输出：%s\n", i, ttmm, *(ab + i), temp);
 					}
 				}
 				printf("\n\n\n");

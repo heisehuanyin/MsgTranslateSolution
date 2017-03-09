@@ -38,7 +38,9 @@ int DataFileAccess::GetAMsgFromDataFile(UWORD_i16** msg_out) {
 		if (i<2) {
 			msg_cache[i] = 0x55aa;
 		}
-		msg_cache[i] = 0;
+		else {
+			msg_cache[i] = 0;
+		}
 	}
 
 	
@@ -56,8 +58,8 @@ int DataFileAccess::GetAMsgFromDataFile(UWORD_i16** msg_out) {
 			this->headJ += 1;
 		}
 		
-		if (this->headJ == 4 || feof(this->file) != 0) {
-			this->headJ = 2;
+		if (this->headJ == 2 || feof(this->file) != 0) {
+			this->headJ = 0;
 			break;
 		}
 	}

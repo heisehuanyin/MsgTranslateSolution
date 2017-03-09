@@ -29,8 +29,9 @@ int MsgHead_Parse::EnumKeyWordsInner(char*** argsArrayOut, int* argsCount)
 }
 
 
-int MsgHead_Parse::ProcessMsgUnit(const UWORD_i16* const ptr_value_first, const char* const args, char** bufferOut)
+int MsgHead_Parse::ProcessMsgUnitAsHexOrStr(const UWORD_i16* const ptr_value_first, const char* const args, char** bufferOut)
 {
-	sprintf_s(*bufferOut, 20, "%x", *ptr_value_first);
+	sprintf_s(this->content, 20, "%x", *ptr_value_first);
+	*bufferOut = this->content;
 	return 0;
 }

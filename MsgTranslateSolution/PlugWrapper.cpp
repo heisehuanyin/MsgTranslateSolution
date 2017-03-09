@@ -18,11 +18,11 @@ int PlugWrapper::GetKeyValueFromMsg(const UWORD_i16* const MsgArray, const char*
 {
 	if (this->IsBaseSupport)
 	{
-		this->baseSupport->GetKeyWords(MsgArray, args, bufferOut);
+		this->baseSupport->GetKeyWordsAsHexOrStr(MsgArray, args, bufferOut);
 	}
 	else
 	{
-		this->enhancePlug->ProcessMsgUnit(MsgArray, args, bufferOut);
+		this->enhancePlug->ProcessMsgUnitAsHexOrStr(MsgArray, args, bufferOut);
 	}
 	return 0;
 }
