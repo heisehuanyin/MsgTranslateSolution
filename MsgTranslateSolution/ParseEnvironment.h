@@ -76,7 +76,6 @@ private:
 	FILE* outputFilePtr;
 	UWORD_i16* OriginalMsgCache;//手动写入的缓冲地
 	UWORD_i16* PureMsg;
-	const char* parseBaseDocPath;
 
 
 

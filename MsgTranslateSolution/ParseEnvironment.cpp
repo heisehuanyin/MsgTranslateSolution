@@ -1,9 +1,6 @@
 #include "ParseEnvironment.h"
 
 
-
-
-
 using namespace std;
 
 ParseUnit::~ParseUnit() {}
@@ -13,7 +10,6 @@ ParseUnit::ParseUnit()
 	: binaryFilePath(NULL)
 	, StrictStr(NULL)
 	, PureMsg(NULL), doc(NULL)
-	, parseBaseDocPath(NULL)
 	, loadTools(NULL)
 	, basep(NULL)
 	, outputFilePtr(NULL)
@@ -23,11 +19,10 @@ ParseUnit::ParseUnit()
 
 
 int ParseUnit::initSelf(const char* const parseBase, const char* const binaryDataFile, const char* const strictString, const char* const outputFile) {
-	this->parseBaseDocPath = parseBase;
 	this->binaryFilePath = binaryDataFile;
 	this->StrictStr = strictString;
 
-	this->doc = new TiXmlDocument(parseBaseDocPath);
+	this->doc = new TiXmlDocument(parseBase);
 	this->doc->LoadFile(TIXML_ENCODING_LEGACY);
 
 	//创建插件加载器
