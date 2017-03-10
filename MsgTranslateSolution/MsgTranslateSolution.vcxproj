@@ -151,7 +151,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ParseEnviroments.cpp" />
     <ClCompile Include="ParseEnvironment.cpp" />
-    <ClCompile Include="PlugWrapper.cpp" />
     <ClCompile Include="tinystr.cpp" />
     <ClCompile Include="tinyxml.cpp" />
     <ClCompile Include="tinyxmlerror.cpp" />
@@ -164,7 +163,6 @@
     <ClInclude Include="Macro_Global.h" />
     <ClInclude Include="ParseEnviroments.h" />
     <ClInclude Include="ParseEnvironment.h" />
-    <ClInclude Include="PlugWrapper.h" />
     <ClInclude Include="StandardParseBaseSupportInterface.h" />
     <ClInclude Include="StandardExtensionInterface.h" />
     <ClInclude Include="tinystr.h" />
