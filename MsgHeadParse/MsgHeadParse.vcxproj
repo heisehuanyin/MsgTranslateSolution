@@ -22,7 +22,7 @@
     <ProjectGuid>{3C8A4A35-F9A7-4FE3-918E-F46F06CCCA22}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>MsgHeadParse</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

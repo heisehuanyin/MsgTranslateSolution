@@ -22,7 +22,7 @@
     <ProjectGuid>{4F5337B2-FACC-476B-9271-D792292319AE}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>TowWordAs_union</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
     <ProjectName>TwoWordAs_union</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

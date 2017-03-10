@@ -22,7 +22,7 @@
     <ProjectGuid>{EB1075BE-1AD7-49A6-BD0A-E9149A443F0A}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Card_57_original_msg_parse_support</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
     <ProjectName>Card_XX_original_msg_parse_support</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

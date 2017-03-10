@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 
-Card57_parse_support::Card57_parse_support()
+CardXX_parse_support::CardXX_parse_support()
 	: binaryFile(NULL) {
 	this->KeyWordsArray[0] = "RTADDR";
 	this->KeyWordsArray[1] = "SUBADDR";
@@ -24,13 +24,13 @@ Card57_parse_support::Card57_parse_support()
 }
 
 
-Card57_parse_support::~Card57_parse_support()
+CardXX_parse_support::~CardXX_parse_support()
 {
 	delete this->binaryFile;
 }
 
 
-int Card57_parse_support::GetKeyWordsAsHexOrStr(const UWORD_i16* const msgArray, const char* const argv, char** bufferOut)
+int CardXX_parse_support::GetKeyWordsAsHexOrStr(const UWORD_i16* const msgArray, const char* const argv, char** bufferOut)
 {
 	//消息类别标示码：0,未知;		1,RT->BC;	2,BC->RT;	3,RT->RT;	4,矢量字;
 	int vvv = *(msgArray + 9);
@@ -249,7 +249,7 @@ int Card57_parse_support::GetKeyWordsAsHexOrStr(const UWORD_i16* const msgArray,
 }
 
 
-int Card57_parse_support::EnumKeyWordsInner(char*** argsArrayOut, int* argsCount)
+int CardXX_parse_support::EnumKeyWordsInner(char*** argsArrayOut, int* argsCount)
 {
 	*argsArrayOut = this->KeyWordsArray;
 
@@ -259,7 +259,7 @@ int Card57_parse_support::EnumKeyWordsInner(char*** argsArrayOut, int* argsCount
 }
 
 
-int Card57_parse_support::GetPureMsgBody(UWORD_i16 * const msgBufin, UWORD_i16 ** bufferOut)
+int CardXX_parse_support::GetPureMsgBody(UWORD_i16 * const msgBufin, UWORD_i16 ** bufferOut)
 {
 	char *temp = "存储函数类型的内容，长度应该够用了";
 
@@ -290,18 +290,18 @@ int Card57_parse_support::GetPureMsgBody(UWORD_i16 * const msgBufin, UWORD_i16 *
 
 
 StandardParseBaseSupportInterface* GetNewParseBaseInstancePtr(char** argv, int argc ) {
-	return new Card57_parse_support();
+	return new CardXX_parse_support();
 }
 
 
 
-int Card57_parse_support::GetOneOriginalMsg(UWORD_i16** bufferOut)
+int CardXX_parse_support::GetOneOriginalMsg(UWORD_i16** bufferOut)
 {
 	return this->binaryFile->GetAMsgFromDataFile(bufferOut);
 }
 
 
-int Card57_parse_support::OpenBinaryDataFile(const char* const filePath)
+int CardXX_parse_support::OpenBinaryDataFile(const char* const filePath)
 {
 	this->binaryFile->initSelf(filePath);
 	return 0;

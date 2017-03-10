@@ -6,12 +6,12 @@
 
 
 
-class Card57_parse_support :
+class CardXX_parse_support :
 	public StandardParseBaseSupportInterface
 {
 public:
-	Card57_parse_support();
-	virtual ~Card57_parse_support();
+	CardXX_parse_support();
+	virtual ~CardXX_parse_support();
 
 	// 根据传入的二维字符串数组获取总线消息中的信息，通过bufferOut返回信息，参与到软件主体的判断过程
 	// 输入参数：msgArray,传入的软件主体获取的原始总线消息。
