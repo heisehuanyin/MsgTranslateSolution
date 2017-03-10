@@ -14,11 +14,11 @@ PlugWrapper::~PlugWrapper()
 }
 
 
-int PlugWrapper::GetKeyValueFromMsg(const UWORD_i16* const MsgArray, const char* const args, char** bufferOut)
+int PlugWrapper::ProcessMsgUnitAsHexOrStr(const UWORD_i16* const MsgArray, const char* const args, char** bufferOut)
 {
 	if (this->IsBaseSupport)
 	{
-		this->baseSupport->GetKeyWordsAsHexOrStr(MsgArray, args, bufferOut);
+		this->baseSupport->ProcessMsgUnitAsHexOrStr(MsgArray, args, bufferOut);
 	}
 	else
 	{

@@ -1,22 +1,22 @@
 导出的界面中，输出格式范例中为整数的都是可以用来做判据的，默认十六进制，具体请咨询作者 
-Card_57_original_msg_parse_support.dll
+Card_XX_original_msg_parse_support.dll
 
 插件类型：BaseSupport
 提供输入内容：0xfffffffffff…………ffffff
 
 内部参数与输出范式:
-  0->	Card_57_original_msg_parse_support.dll RTADDR 			 输出：1f
-  1->	Card_57_original_msg_parse_support.dll SUBADDR 			 输出：f
-  2->	Card_57_original_msg_parse_support.dll MTSTATE 			 输出：ffff
-  3->	Card_57_original_msg_parse_support.dll RTSTATE 			 输出：ffff
-  4->	Card_57_original_msg_parse_support.dll MSGLENGTH 			 输出：1f
-  5->	Card_57_original_msg_parse_support.dll SYSTIME 			 输出：ffffffff
-  6->	Card_57_original_msg_parse_support.dll B1553TIME 			 输出：ffff
-  7->	Card_57_original_msg_parse_support.dll MSGTYPE 			 输出：1
-  8->	Card_57_original_msg_parse_support.dll RTADDR_E 			 输出：N/A
-  9->	Card_57_original_msg_parse_support.dll SUBADDR_E 			 输出：N/A
-  10->	Card_57_original_msg_parse_support.dll RTSTATE_E 			 输出：N/A
-  11->	Card_57_original_msg_parse_support.dll MSGCOUNT 			 输出：ffffffff
+  0->	Card_XX_original_msg_parse_support.dll RTADDR 			 输出：1f
+  1->	Card_XX_original_msg_parse_support.dll SUBADDR 			 输出：f
+  2->	Card_XX_original_msg_parse_support.dll MTSTATE 			 输出：ffff
+  3->	Card_XX_original_msg_parse_support.dll RTSTATE 			 输出：ffff
+  4->	Card_XX_original_msg_parse_support.dll MSGLENGTH 			 输出：1f
+  5->	Card_XX_original_msg_parse_support.dll SYSTIME 			 输出：ffffffff
+  6->	Card_XX_original_msg_parse_support.dll B1553TIME 			 输出：ffff
+  7->	Card_XX_original_msg_parse_support.dll MSGTYPE 			 输出：1
+  8->	Card_XX_original_msg_parse_support.dll RTADDR_E 			 输出：N/A
+  9->	Card_XX_original_msg_parse_support.dll SUBADDR_E 			 输出：N/A
+  10->	Card_XX_original_msg_parse_support.dll RTSTATE_E 			 输出：N/A
+  11->	Card_XX_original_msg_parse_support.dll MSGCOUNT 			 输出：ffffffff
 
 
 

@@ -15,14 +15,14 @@ CmdWrapper::~CmdWrapper()
 }
 
 
-int CmdWrapper::GetKeyValueFromMsg(char** bufferOut)
+int CmdWrapper::ProcessMsgUnitAsHexOrStr(char** bufferOut)
 {
 	
 	return 0;
 }
 
 
-int CmdWrapper::LoadCmdAndArgs(const char* const CmdRel, PlugWrapper* WrapperAimed)
+int CmdWrapper::LoadCmdAndArgs(const char* const CmdRel, AbstractPlugClass * WrapperAimed)
 {
 	return 0;
 }

@@ -1,6 +1,5 @@
 #pragma once
 #include "Macro_Global.h"
-#include "PlugWrapper.h"
 #include <string>
 #include <map>
 #include "tinystr.h"
@@ -39,8 +38,7 @@ private:
 	virtual int FindRuleAdaptAndTranslate(TiXmlElement* supperPattern, TiXmlElement* supperParseRule, UWORD_i16 * const msg_in);
 
 	//收集加载过程中获得的插件
-	virtual int CollectPlugIn(const char* const PlugName, StandardExtensionInterface* WrapperIn);
-	virtual int CollectPlugIn(const char* const PlugName, StandardParseBaseSupportInterface* WrapperIn);
+	virtual int CollectPlugIn(const char* const PlugName, AbstractPlugClass* Plug_In);
 	
 	//加载文件中引用的解析库
 	virtual int LoadParseLibrary();
@@ -51,8 +49,8 @@ private:
 	//加载匹配模式
 	virtual int LoadPatternAndParseRule();
 
-	//提取已经收集的wrappper
-	virtual PlugWrapper* GetPlugWrapper(const char * const PlugName);
+	//提取已经收集的Plug
+	virtual AbstractPlugClass* GetPlugWrapper(const char * const PlugName);
 
 	//手机命令引用点
 	virtual int CollectCmdEnterPoint(const char* const CmdName, const char* const libraryKeyAndArgs);
@@ -67,7 +65,7 @@ private:
 
 
 	StandardParseBaseSupportInterface* basep;
-	std::map<std::string, PlugWrapper*> wrapperContainer;//wrapper容器
+	std::map<std::string, AbstractPlugClass*> wrapperContainer;//wrapper容器
 	std::map<std::string, std::string> cmdEnterpointContainer;
 	ExtensionLoader* loadTools;//加载器
 	TiXmlDocument* doc;
@@ -89,5 +87,6 @@ private:
 
 	ParseEnviroments* prsEnv;
 	int fitTimes;
+public:
 };
 

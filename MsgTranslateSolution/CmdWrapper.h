@@ -1,5 +1,7 @@
 #pragma once
-#include "PlugWrapper.h"
+
+#include "AbstractPlugClass.h"
+#include "Macro_Global.h"
 
 class CmdWrapper
 {
@@ -9,9 +11,9 @@ public:
 private:
 	char* DLL_lib_key;
 	char* Args;
-	PlugWrapper* WrapperAimed;
+	AbstractPlugClass* WrapperAimed;
 public:
-	virtual int GetKeyValueFromMsg(char** bufferOut);
-	virtual int LoadCmdAndArgs(const char* const CmdRel, PlugWrapper* WrapperAimed);
+	virtual int ProcessMsgUnitAsHexOrStr(char** bufferOut);
+	virtual int LoadCmdAndArgs(const char* const CmdRel, AbstractPlugClass * WrapperAimed);
 };
 

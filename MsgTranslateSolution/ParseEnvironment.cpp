@@ -52,32 +52,6 @@ int ParseUnit::SetOriginalMsg(UWORD_i16 * const OriginalMsg) {
 
 
 
-
-
-int ParseUnit::CollectPlugIn(const char* const PlugName, StandardExtensionInterface* WrapperIn) {
-	PlugWrapper* wrapper = new PlugWrapper();
-	wrapper->CollectPlugInstance(WrapperIn);
-
-	string key = PlugName;
-
-	this->wrapperContainer.insert(make_pair(PlugName, wrapper));
-
-	return 0;
-}
-
-
-int ParseUnit::CollectPlugIn(const char* const PlugName, StandardParseBaseSupportInterface* WrapperIn) {
-	PlugWrapper* wrapper = new PlugWrapper();
-	wrapper->CollectPlugInstance(WrapperIn);
-
-	string key = PlugName;
-
-	this->wrapperContainer.insert(make_pair(PlugName, wrapper));
-
-	return 0;
-}
-
-
 int ParseUnit::CollectCmdEnterPoint(const char* const CmdName, const char* const libraryKeyAndArgs) {
 	string key = CmdName;
 	string value = libraryKeyAndArgs;
@@ -126,9 +100,9 @@ int ParseUnit::LoadParseLibrary() {
 }
 
 
-PlugWrapper* ParseUnit::GetPlugWrapper(const char * const PlugName) {
+AbstractPlugClass* ParseUnit::GetPlugWrapper(const char * const PlugName) {
 	string key = PlugName;
-	map<string, PlugWrapper*>::iterator it = this->wrapperContainer.end();
+	map<string, AbstractPlugClass*>::iterator it = this->wrapperContainer.end();
 
 	if (this->wrapperContainer.find(key) != it) {
 		return it->second;
@@ -194,16 +168,16 @@ bool ParseUnit::CheckCriterion(const char* const tagName, const char* const Msgi
 	string args = keyandargs.substr(keyandargs.find_first_of(" ") + 1);
 	char* val = "";
 
-	PlugWrapper* wrapper = this->wrapperContainer[key];
+	AbstractPlugClass* wrapper = this->wrapperContainer[key];
 	if (!strcmp(Msgindex,"not")) {
-		wrapper->GetKeyValueFromMsg(msg_in, args.c_str(), &val);
+		wrapper->ProcessMsgUnitAsHexOrStr(msg_in, args.c_str(), &val);
 	}
 	else {
 		int index = atoi(Msgindex);
 		UWORD_i16* puremsg = nullptr;
 		this->basep->GetPureMsgBody(msg_in, &puremsg);
 
-		wrapper->GetKeyValueFromMsg(puremsg+index, args.c_str(), &val);
+		wrapper->ProcessMsgUnitAsHexOrStr(puremsg+index, args.c_str(), &val);
 
 	}
 	int valpre = strtol(valCertain, NULL, 16);
@@ -216,7 +190,7 @@ bool ParseUnit::CheckCriterion(const char* const tagName, const char* const Msgi
 }
 
 
-int ParseUnit::ProcPureMsgSection(TiXmlElement * pureMsgRuleCollect, UWORD_i16 * const msg_in) {
+int ParseUnit::ProcPureMsgSection(TiXmlElement * pureMsgRuleCollect, UWORD_i16 * const puremsg_in) {
 	UWORD_i16 * puremsg = nullptr;
 	TiXmlElement* oneParseRule = pureMsgRuleCollect->FirstChildElement();
 
@@ -235,8 +209,8 @@ int ParseUnit::ProcPureMsgSection(TiXmlElement * pureMsgRuleCollect, UWORD_i16 *
 		string args = keyandargs.substr(keyandargs.find_first_of(" ") + 1);
 		char* val = "";
 
-		PlugWrapper* wrapper = this->wrapperContainer[key];
-		wrapper->GetKeyValueFromMsg(msg_in + v_i, args.c_str(), &val);
+		AbstractPlugClass* wrapper = this->wrapperContainer[key];
+		wrapper->ProcessMsgUnitAsHexOrStr(puremsg_in + v_i, args.c_str(), &val);
 
 		if (this->outputFilePtr == NULL) {
 			printf("%s:%s\t", v_name , val);
@@ -267,7 +241,7 @@ int ParseUnit::MsgBasicParse(const UWORD_i16* const msg_in) {
 
 	char* value = nullptr;
 	for (int i = 0; i < num; i++) {
-		this->basep->GetKeyWordsAsHexOrStr(msg_in, *(keywords + i), &value);
+		this->basep->ProcessMsgUnitAsHexOrStr(msg_in, *(keywords + i), &value);
 		
 		if (this->outputFilePtr == NULL) {
 			printf("%s:%s\t", *(keywords + i), value);
@@ -310,9 +284,9 @@ int ParseUnit::FindRuleAdaptAndTranslate(TiXmlElement* patternCollect, TiXmlElem
 
 			if (this->CheckCriterion(tagname, varIndex, target_value, msg_in)) {
 				if (elelm->NoChildren()) {
-					UWORD_i16* msg_t = nullptr;
-					this->basep->GetPureMsgBody(msg_in, &msg_t);
-					this->ProcPureMsgSection(oneRuleAdapted, msg_t);
+					UWORD_i16* puremsg = nullptr;
+					this->basep->GetPureMsgBody(msg_in, &puremsg);
+					this->ProcPureMsgSection(oneRuleAdapted, puremsg);
 					this->fitTimes += 1;
 				}
 				else {
@@ -327,5 +301,15 @@ int ParseUnit::FindRuleAdaptAndTranslate(TiXmlElement* patternCollect, TiXmlElem
 		elelm = elelm->NextSiblingElement();
 	}
 
+	return 0;
+}
+
+
+// ÊÕ¼¯²å¼þ
+int ParseUnit::CollectPlugIn(const char* const PlugName, AbstractPlugClass* Plug_In)
+{
+	string key = PlugName;
+
+	this->wrapperContainer.insert(make_pair(PlugName, Plug_In));
 	return 0;
 }

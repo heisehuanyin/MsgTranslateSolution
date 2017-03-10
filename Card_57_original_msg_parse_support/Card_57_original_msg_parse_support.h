@@ -17,7 +17,7 @@ public:
 	// 输入参数：msgArray,传入的软件主体获取的原始总线消息。
 	// 输入参数：argv，传入的字符串数组,存储传入的参数。
 	// 输入参数：bufferOut,处理后得到的内容通过此缓存区传出。
-	virtual int GetKeyWordsAsHexOrStr(const UWORD_i16* const msgArray, const char* const argv, char** bufferOut);
+	virtual int ProcessMsgUnitAsHexOrStr(const UWORD_i16* const msgArray, const char* const argv, char** bufferOut);
 
 	// 提取基础解析服务模块所提供的所有消息解析方式
 	// 输入参数：argsArrayOut,获取本模块提供的解析服务的所有方式

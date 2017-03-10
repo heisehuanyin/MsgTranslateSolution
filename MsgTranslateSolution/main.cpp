@@ -69,7 +69,7 @@ void main(int argc, char** argv) {
 					((StandardParseBaseSupportInterface*)basep)->EnumKeyWordsInner(&ab, &ntemp);
 					printf("内部参数与输出范式:\n");
 					for (int i = 0; i < ntemp; i++) {
-						((StandardParseBaseSupportInterface*)basep)->GetKeyWordsAsHexOrStr(mmmsg, *(ab + i), &temp);
+						((StandardParseBaseSupportInterface*)basep)->ProcessMsgUnitAsHexOrStr(mmmsg, *(ab + i), &temp);
 
 						printf("  %d->\t%s %s \t\t\t 输出：%s\n", i, ttmm, *(ab + i),temp);
 					}

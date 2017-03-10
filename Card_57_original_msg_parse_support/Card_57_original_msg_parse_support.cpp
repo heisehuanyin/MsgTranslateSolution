@@ -30,7 +30,7 @@ CardXX_parse_support::~CardXX_parse_support()
 }
 
 
-int CardXX_parse_support::GetKeyWordsAsHexOrStr(const UWORD_i16* const msgArray, const char* const argv, char** bufferOut)
+int CardXX_parse_support::ProcessMsgUnitAsHexOrStr(const UWORD_i16* const msgArray, const char* const argv, char** bufferOut)
 {
 	//消息类别标示码：0,未知;		1,RT->BC;	2,BC->RT;	3,RT->RT;	4,矢量字;
 	int vvv = *(msgArray + 9);
@@ -263,7 +263,7 @@ int CardXX_parse_support::GetPureMsgBody(UWORD_i16 * const msgBufin, UWORD_i16 *
 {
 	char *temp = "存储函数类型的内容，长度应该够用了";
 
-	this->GetKeyWordsAsHexOrStr(msgBufin, "MSGTYPE", &temp);
+	this->ProcessMsgUnitAsHexOrStr(msgBufin, "MSGTYPE", &temp);
 	//消息类别标示码：0,未知;		1,RT->BC;	2,BC->RT;	3,RT->RT;	4,矢量字;
 
 	int type = atoi(temp);
