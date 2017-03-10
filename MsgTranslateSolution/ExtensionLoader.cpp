@@ -12,11 +12,11 @@ ExtensionLoader::~ExtensionLoader()
 
 
 // 加载一个基础解析支持包，每个应用程序实例至少需要一个基础包
-int ExtensionLoader::LoadNewParseBaseExtension(const char* const libraryName, char**  argv, int argc, StandardParseBaseSupportInterface** ExtensionRefOut)
+int ExtensionLoader::LoadNewParseBaseExtension(const char* const libraryName, char**  argv, int argc, StandardBaseSupportInterface** ExtensionRefOut)
 {
 	USES_CONVERSION;
 	//加载底层支持包插件函数
-	typedef StandardParseBaseSupportInterface* (*LoadParseBaseUnit)(char** argv, int argc);
+	typedef StandardBaseSupportInterface* (*LoadParseBaseUnit)(char** argv, int argc);
 
 
 	//加载一个底层解析支持包

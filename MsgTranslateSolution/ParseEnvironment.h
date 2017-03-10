@@ -46,8 +46,6 @@ private:
 	//加载定义的命令入口
 	virtual int LoadCmdEnterPoint();
 
-	//加载匹配模式
-	virtual int LoadPatternAndParseRule();
 
 	//提取已经收集的Plug
 	virtual AbstractPlugClass* GetAPlugin(const char * const PlugName);
@@ -64,13 +62,10 @@ private:
 
 
 
-	StandardParseBaseSupportInterface* basep;
+	StandardBaseSupportInterface* basep;
 	std::map<std::string, AbstractPlugClass*> pluginContainer;//wrapper容器
 	std::map<std::string, std::string> cmdConfigContainer;
 	ExtensionLoader* loadTools;//加载器
-	TiXmlDocument* docNode;
-	TiXmlElement* patternCollect;// 存储经常使用的pattern集合节点
-	TiXmlElement* parseRuleCollect;// 存储常用的解析规则集合节点
 	const char* binaryFilePath;//二进制文件路径，数据源
 	const char* StrictStr;//输出条目约束字符串
 	FILE* outputFilePtr;

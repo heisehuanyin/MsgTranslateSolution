@@ -11,7 +11,7 @@ public:
 	ExtensionLoader();
 	virtual ~ExtensionLoader();
 	// 加载一个基础解析支持包，每个应用程序实例至少需要一个基础包
-	virtual int LoadNewParseBaseExtension(const char* const libraryName, char**  argv, int argc, StandardParseBaseSupportInterface** ExtensionRefOut);
+	virtual int LoadNewParseBaseExtension(const char* const libraryName, char**  argv, int argc, StandardBaseSupportInterface** ExtensionRefOut);
 	// 加载标准增强解析插件使用
 	virtual int LoadNewParseEnhanceExtension(const char* const libraryName, char**  argv, int argc, StandardExtensionInterface** ExtensionRefOut);
 };

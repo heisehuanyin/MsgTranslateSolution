@@ -7,7 +7,7 @@
 
 
 class CardXX_parse_support :
-	public StandardParseBaseSupportInterface
+	public StandardBaseSupportInterface
 {
 public:
 	CardXX_parse_support();

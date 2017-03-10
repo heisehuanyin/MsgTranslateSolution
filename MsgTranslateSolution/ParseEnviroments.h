@@ -7,17 +7,23 @@ class ParseEnviroments {
 public:
 	ParseEnviroments();
 	virtual ~ParseEnviroments();
-	// 载入解析依据文档
-	virtual int LoadParseBase(const char* const parseBaseDoc);
 	// 额外的初始化步骤
-	virtual int initself();
-	virtual int GetParseRuleCollect(TiXmlElement** elementRefOut);
-	virtual int GetPatternCollect(TiXmlElement** elementRefOut);
-	virtual int SetOriginalMsg(UWORD_i16* msg_in);
-	virtual int GetOriginalMsg(UWORD_i16** msg_out);
-	virtual int SetPureMsg(UWORD_i16* msg_in);
-	virtual int GetPureMsg(UWORD_i16** msg_out);
+	virtual int initself(const char* const parseBasePath);
+
+
+	virtual TiXmlElement* GetParseRuleCollect();
+	virtual TiXmlElement* GetPatternCollect();
+	virtual TiXmlElement* GetLibraryCollect();
+	virtual TiXmlElement* GetCmdPointCollect();
+
+
 private:
 	TiXmlDocument* docNode;
+	// 存储用到的pattern集合节点
+	TiXmlElement* patternCollect;
+	// 存储常用的解析规则集合节点
+	TiXmlElement* parseRuleCollect;
+	TiXmlElement* CmdListNode;
+	TiXmlElement* libraryCollectNode;
 };
 

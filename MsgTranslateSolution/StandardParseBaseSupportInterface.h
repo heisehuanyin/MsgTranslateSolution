@@ -16,10 +16,10 @@
 #include "../MsgTranslateSolution/Macro_Global.h"
 #include "AbstractPlugClass.h"
 
-class StandardParseBaseSupportInterface :public AbstractPlugClass
+class StandardBaseSupportInterface :public AbstractPlugClass
 {
 public:
-	~StandardParseBaseSupportInterface() {};
+	~StandardBaseSupportInterface() {};
 
 
 	// 提取基础解析服务模块所提供的所有消息解析方式
@@ -45,4 +45,4 @@ public:
 
 
 //导出对象指针，需要每个dll作者实现此函数，将派生类通过此函数导出
-extern "C" STDINTERFACE_API StandardParseBaseSupportInterface* GetNewParseBaseInstancePtr(char** argv, int argc = 0);
+extern "C" STDINTERFACE_API StandardBaseSupportInterface* GetNewParseBaseInstancePtr(char** argv, int argc = 0);

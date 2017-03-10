@@ -1,86 +1,86 @@
 <?xml version="1.0" ?>
 <protocol>
-<sysConfig>
-<library>
-<baseSupport rel="Card_XX_original_msg_parse_support.dll"/>
-<enhance rel="Code_mark_parse.dll"/>
-<enhance rel="OneWordAs_float.dll"/>
-<enhance rel="TwoWordAs_union.dll"/>
-<enhance rel="MsgHeadParse.dll"/>
-</library>
-<cmdlist>
-<rtaddr rel="Card_XX_original_msg_parse_support.dll RTADDR"/>
-<subaddr rel="Card_XX_original_msg_parse_support.dll SUBADDR"/>
-<mtstate rel="Card_XX_original_msg_parse_support.dll MTSTATE"/>
-<rt1state rel="Card_XX_original_msg_parse_support.dll RTSTATE"/>
-<rt2addr rel="Card_XX_original_msg_parse_support.dll RTADDR_E"/>
-<sub2addr rel="Card_XX_original_msg_parse_support.dll SUBADDR_E"/>
-<rt2state rel="Card_XX_original_msg_parse_support.dll RTSTATE_E"/>
-<systime rel="Card_XX_original_msg_parse_support.dll SYSTIME"/>
-<b1553time rel="Card_XX_original_msg_parse_support.dll B1553TIME"/>
-<msglength rel="Card_XX_original_msg_parse_support.dll MSGLENGTH"/>
-<msgtype rel="Card_XX_original_msg_parse_support.dll MSGTYPE"/>
-<msgcount rel="Card_XX_original_msg_parse_support.dll MSCOUNT"/>
-<dateparse rel="Code_mark_parse.dll WORD_3"/>
-<sumcalc rel="Code_mark_parse.dll WORD_1"/>
-<vector rel="Code_mark_parse.dll WORD_1"/>
-<floatnum rel="OneWordAs_float.dll DIVIDE_100"/>
-<floatunion rel="TwoWordAs_union.dll 2WORD_AS_float_HBIT_first"/>
-<intunion rel="TwoWordAs_union.dll 2WORD_AS_int_HBIT_first"/>
-<msghead rel="MsgHeadParse.dll DIRECT_HEX"/>
-</cmdlist>
-<pattern>
-<rtaddr index="not">
-<subaddr index="not">
-<msghead index="0"/>
-</subaddr>
-</rtaddr>
-</pattern>
-</sysConfig>
-<parseRule>
-<rtaddr value="0xf">
-<subaddr value="0x01">
-<msghead value="0x0a01">
-<msghead index="0" name="default"/>
-<dateparse index="1" name="系统日期"/>
-<sumcalc index="4" name="default"/>
-</msghead>
-</subaddr>
-</rtaddr>
-<rtaddr value="1">
-<subaddr value="6">
-<msghead value="0x0a02">
-<msghead index="0" name="default"/>
-<floatnum index="1" name="一个单元浮点"/>
-<floatunion index="2" name="两字浮点"/>
-<intunion index="4" name="两字整形"/>
-</msghead>
-</subaddr>
-</rtaddr>
-<rtaddr value="0xa">
-<subaddr value="2">
-<msghead value="0x0a03">
-<msghead index="0" name="default"/>
-<floatnum index="1" name="一字浮点"/>
-<floatunion index="2" name="两字浮点2"/>
-<intunion index="4" name="两字整形2"/>
-</msghead>
-</subaddr>
-<subaddr value="3">
-<msghead value="0x0a03">
-<msghead index="0" name="default"/>
-<floatnum index="1" name="一字浮点"/>
-<floatunion index="2" name="两字浮点2"/>
-<intunion index="4" name="两字整形2"/>
-</msghead>
-</subaddr>
-</rtaddr>
-<rtaddr value="not">
-<subaddr value="0">
-<msghead value="not">
-<msghead index="0" name="矢量字"/>
-</msghead>
-</subaddr>
-</rtaddr>
-</parseRule>
+    <sysConfig>
+        <library>
+            <baseSupport rel="Card_XX_original_msg_parse_support.dll"/>
+            <enhance rel="Code_mark_parse.dll"/>
+            <enhance rel="OneWordAs_float.dll"/>
+            <enhance rel="TwoWordAs_union.dll"/>
+            <enhance rel="MsgHeadParse.dll"/>
+        </library>
+        <cmdlist>
+            <rtaddr rel="Card_XX_original_msg_parse_support.dll RTADDR"/>
+            <subaddr rel="Card_XX_original_msg_parse_support.dll SUBADDR"/>
+            <mtstate rel="Card_XX_original_msg_parse_support.dll MTSTATE"/>
+            <rt1state rel="Card_XX_original_msg_parse_support.dll RTSTATE"/>
+            <rt2addr rel="Card_XX_original_msg_parse_support.dll RTADDR_E"/>
+            <sub2addr rel="Card_XX_original_msg_parse_support.dll SUBADDR_E"/>
+            <rt2state rel="Card_XX_original_msg_parse_support.dll RTSTATE_E"/>
+            <systime rel="Card_XX_original_msg_parse_support.dll SYSTIME"/>
+            <b1553time rel="Card_XX_original_msg_parse_support.dll B1553TIME"/>
+            <msglength rel="Card_XX_original_msg_parse_support.dll MSGLENGTH"/>
+            <msgtype rel="Card_XX_original_msg_parse_support.dll MSGTYPE"/>
+            <msgcount rel="Card_XX_original_msg_parse_support.dll MSCOUNT"/>
+            <dateparse rel="Code_mark_parse.dll WORD_3"/>
+            <sumcalc rel="Code_mark_parse.dll WORD_1"/>
+            <vector rel="Code_mark_parse.dll WORD_1"/>
+            <floatnum rel="OneWordAs_float.dll DIVIDE_100"/>
+            <floatunion rel="TwoWordAs_union.dll 2WORD_AS_float_HBIT_first"/>
+            <intunion rel="TwoWordAs_union.dll 2WORD_AS_int_HBIT_first"/>
+            <msghead rel="MsgHeadParse.dll DIRECT_HEX"/>
+        </cmdlist>
+        <pattern>
+            <rtaddr index="not">
+                <subaddr index="not">
+                    <msghead index="0"/>
+                </subaddr>
+            </rtaddr>
+        </pattern>
+    </sysConfig>
+    <parseRule>
+        <rtaddr value="0xf">
+            <subaddr value="0x01">
+                <msghead value="0x0a01">
+                    <msghead index="0" name="default"/>
+                    <dateparse index="1" name="系统日期"/>
+                    <sumcalc index="4" name="default"/>
+                </msghead>
+            </subaddr>
+        </rtaddr>
+        <rtaddr value="1">
+            <subaddr value="6">
+                <msghead value="0x0a02">
+                    <msghead index="0" name="default"/>
+                    <floatnum index="1" name="一个单元浮点"/>
+                    <floatunion index="2" name="两字浮点"/>
+                    <intunion index="4" name="两字整形"/>
+                </msghead>
+            </subaddr>
+        </rtaddr>
+        <rtaddr value="0xa">
+            <subaddr value="2">
+                <msghead value="0x0a03">
+                    <msghead index="0" name="default"/>
+                    <floatnum index="1" name="一字浮点"/>
+                    <floatunion index="2" name="两字浮点2"/>
+                    <intunion index="4" name="两字整形2"/>
+                </msghead>
+            </subaddr>
+            <subaddr value="3">
+                <msghead value="0x0a03">
+                    <msghead index="0" name="default"/>
+                    <floatnum index="1" name="一字浮点"/>
+                    <floatunion index="2" name="两字浮点2"/>
+                    <intunion index="4" name="两字整形2"/>
+                </msghead>
+            </subaddr>
+        </rtaddr>
+        <rtaddr value="not">
+            <subaddr value="0">
+                <msghead value="not">
+                    <msghead index="0" name="矢量字"/>
+                </msghead>
+            </subaddr>
+        </rtaddr>
+    </parseRule>
 </protocol>

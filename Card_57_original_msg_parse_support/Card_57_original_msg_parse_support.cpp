@@ -289,7 +289,7 @@ int CardXX_parse_support::GetPureMsgBody(UWORD_i16 * const msgBufin, UWORD_i16 *
 }
 
 
-StandardParseBaseSupportInterface* GetNewParseBaseInstancePtr(char** argv, int argc ) {
+StandardBaseSupportInterface* GetNewParseBaseInstancePtr(char** argv, int argc ) {
 	return new CardXX_parse_support();
 }
 

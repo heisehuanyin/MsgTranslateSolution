@@ -45,7 +45,7 @@ void main(int argc, char** argv) {
 
 				ExtensionLoader loadTools = ExtensionLoader();
 				AbstractPlugClass* basep = NULL;
-				int rtn = loadTools.LoadNewParseBaseExtension(ttmm, nullptr, 0, (StandardParseBaseSupportInterface**)&basep);
+				int rtn = loadTools.LoadNewParseBaseExtension(ttmm, nullptr, 0, (StandardBaseSupportInterface**)&basep);
 				if (rtn == 2) {
 					rtn = loadTools.LoadNewParseEnhanceExtension(ttmm, nullptr, 0, (StandardExtensionInterface**)&basep);
 				}
@@ -66,10 +66,10 @@ void main(int argc, char** argv) {
 				printf("插件类型：%s\n", ttmp);
 				printf("提供输入内容：0xfffffffffff…………ffffff\n\n");
 				if (!strcmp(ttmp, "BaseSupport")) {
-					((StandardParseBaseSupportInterface*)basep)->EnumKeyWordsInner(&ab, &ntemp);
+					((StandardBaseSupportInterface*)basep)->EnumKeyWordsInner(&ab, &ntemp);
 					printf("内部参数与输出范式:\n");
 					for (int i = 0; i < ntemp; i++) {
-						((StandardParseBaseSupportInterface*)basep)->ProcessMsgUnitAsHexOrStr(mmmsg, *(ab + i), &temp);
+						((StandardBaseSupportInterface*)basep)->ProcessMsgUnitAsHexOrStr(mmmsg, *(ab + i), &temp);
 
 						printf("  %d->\t%s %s \t\t\t 输出：%s\n", i, ttmm, *(ab + i),temp);
 					}

@@ -9,27 +9,26 @@ ParseUnit::~ParseUnit() {}
 ParseUnit::ParseUnit()
 	: binaryFilePath(NULL)
 	, StrictStr(NULL)
-	, docNode(NULL)
 	, loadTools(NULL)
 	, basep(NULL)
 	, outputFilePtr(NULL)
 	, OriginalMsgCache(NULL)
-	, patternCollect(NULL)
-	, parseRuleCollect(NULL), prsEnv(NULL), fitTimes(0) {}
+	, prsEnv(NULL), fitTimes(0) {
+	
+	this->prsEnv = new ParseEnviroments();
+}
 
 
 int ParseUnit::initSelf(const char* const parseBase, const char* const binaryDataFile, const char* const strictString, const char* const outputFile) {
 	this->binaryFilePath = binaryDataFile;
 	this->StrictStr = strictString;
 
-	this->docNode = new TiXmlDocument(parseBase);
-	this->docNode->LoadFile(TIXML_ENCODING_LEGACY);
+	this->prsEnv->initself(parseBase);
 
 	//创建插件加载器
 	this->loadTools = new ExtensionLoader();
 	this->LoadParseLibrary();
 	this->LoadCmdEnterPoint();
-	this->LoadPatternAndParseRule();
 
 
 	if (outputFile != NULL) {
@@ -59,10 +58,7 @@ int ParseUnit::CollectCmdEnterPoint(const char* const CmdName, const char* const
 int ParseUnit::LoadParseLibrary() {
 
 	//寻找合适节点====================================================
-	TiXmlElement* protocolNode = this->docNode->FirstChildElement("protocol");
-	TiXmlElement* sysCfg = protocolNode->FirstChildElement("sysConfig");
-	TiXmlElement* library = sysCfg->FirstChildElement("library");
-	TiXmlElement* baseSupport = library->FirstChildElement("baseSupport");
+	TiXmlElement* baseSupport = this->prsEnv->GetLibraryCollect()->FirstChildElement("baseSupport");
 
 	// loadBasePlug===================================================
 	char** ab = (char**)&"";
@@ -81,7 +77,7 @@ int ParseUnit::LoadParseLibrary() {
 
 	// loadEnhancePlug================================================
 	StandardExtensionInterface* pextension = NULL;
-	TiXmlElement* elm = library->FirstChildElement("enhance");
+	TiXmlElement* elm = this->prsEnv->GetLibraryCollect()->FirstChildElement("enhance");
 	while (elm != NULL) {
 		//正式工作
 		this->loadTools->LoadNewParseEnhanceExtension(elm->Attribute("rel"), ab, ntemp, &pextension);
@@ -108,10 +104,7 @@ AbstractPlugClass* ParseUnit::GetAPlugin(const char * const PlugName) {
 
 
 int ParseUnit::LoadCmdEnterPoint() {
-
-	TiXmlElement* sysCfg = this->docNode->FirstChildElement("protocol")->FirstChildElement("sysConfig");
-	TiXmlElement* cmdList = sysCfg->FirstChildElement("cmdlist");
-	TiXmlElement* cmdOne = cmdList->FirstChildElement();
+	TiXmlElement* cmdOne = this->prsEnv->GetCmdPointCollect()->FirstChildElement();
 	while (cmdOne != NULL) {
 		char cmdandrel[2048] = "";
 		sprintf_s(cmdandrel, 2000, "%s", cmdOne->Attribute("rel"));
@@ -127,14 +120,6 @@ int ParseUnit::LoadCmdEnterPoint() {
 }
 
 
-int ParseUnit::LoadPatternAndParseRule() {
-
-	TiXmlElement* sysCfg = this->docNode->FirstChildElement("protocol")->FirstChildElement("sysConfig");
-	this->patternCollect = sysCfg->FirstChildElement("pattern");
-	this->parseRuleCollect = docNode->FirstChildElement("protocol")->FirstChildElement("parseRule");
-
-	return 0;
-}
 
 
 int ParseUnit::GetOneMsg(UWORD_i16** original_msg) {
@@ -257,7 +242,7 @@ int ParseUnit::translateMsgAtNow() {
 	while (this->GetOneMsg(&msg_out) != -1) {
 		this->MsgBasicParse(msg_out);
 		this->fitTimes = 0;//重置统计标志量
-		this->FindRuleAdaptAndTranslate(this->patternCollect, this->parseRuleCollect, msg_out);
+		this->FindRuleAdaptAndTranslate(this->prsEnv->GetPatternCollect(), this->prsEnv->GetParseRuleCollect(), msg_out);
 		if (this->fitTimes != 1) {
 			printf("\n解析失败，未发现适配的解析规则(0)或者多次适配，解析规则存在歧义(>1)，适配次数:%d\n\n",  this->fitTimes);
 		}

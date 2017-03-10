@@ -2,53 +2,58 @@
 
 
 
-ParseEnviroments::ParseEnviroments() : docNode(NULL) {}
+ParseEnviroments::ParseEnviroments() :
+docNode(NULL)
+, patternCollect(NULL)
+, parseRuleCollect(NULL)
+, CmdListNode(NULL)
+, libraryCollectNode(NULL)
+{}
 
 
 ParseEnviroments::~ParseEnviroments() {}
 
 
-// 载入解析依据文档
-int ParseEnviroments::LoadParseBase(const char* const parseBaseDoc) {
-	//基于xml解析，建立载入点
-	this->docNode = new TiXmlDocument();//一个文档节点
-	docNode->LoadFile(parseBaseDoc);
+
+
+// 初始化步骤
+int ParseEnviroments::initself(const char* const parseBasePath) {
+	this->docNode = new TiXmlDocument(parseBasePath);
+	this->docNode->LoadFile(TIXML_ENCODING_LEGACY);
+
+
+	TiXmlElement* protocolNode = this->docNode->FirstChildElement("protocol");
+	TiXmlElement* sysCfg = protocolNode->FirstChildElement("sysConfig");
+	this->libraryCollectNode = sysCfg->FirstChildElement("library");
+	this->CmdListNode = sysCfg->FirstChildElement("cmdlist");
+	this->patternCollect = sysCfg->FirstChildElement("pattern");
+	this->parseRuleCollect = protocolNode->FirstChildElement("parseRule");
+
+
+
 
 	return 0;
 }
 
 
-// 额外的初始化步骤
-int ParseEnviroments::initself() {
-	return 0;
+TiXmlElement* ParseEnviroments::GetParseRuleCollect() {
+	return this->parseRuleCollect;
 }
 
 
-int ParseEnviroments::GetParseRuleCollect(TiXmlElement** elementRefOut) {
-	return 0;
+TiXmlElement* ParseEnviroments::GetPatternCollect() {
+	return this->patternCollect;
 }
 
 
-int ParseEnviroments::GetPatternCollect(TiXmlElement** elementRefOut) {
-	return 0;
+
+TiXmlElement* ParseEnviroments::GetLibraryCollect()
+{
+	return this->libraryCollectNode;
 }
 
 
-int ParseEnviroments::SetOriginalMsg(UWORD_i16* msg_in) {
-	return 0;
-}
-
-
-int ParseEnviroments::GetOriginalMsg(UWORD_i16** msg_out) {
-	return 0;
-}
-
-
-int ParseEnviroments::SetPureMsg(UWORD_i16* msg_in) {
-	return 0;
-}
-
-
-int ParseEnviroments::GetPureMsg(UWORD_i16** msg_out) {
-	return 0;
+TiXmlElement* ParseEnviroments::GetCmdPointCollect()
+{
+	return this->CmdListNode;
 }
