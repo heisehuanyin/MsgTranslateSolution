@@ -9,7 +9,7 @@ ParseUnit::~ParseUnit() {}
 ParseUnit::ParseUnit()
 	: binaryFilePath(NULL)
 	, StrictStr(NULL)
-	, PureMsg(NULL), doc(NULL)
+	, docNode(NULL)
 	, loadTools(NULL)
 	, basep(NULL)
 	, outputFilePtr(NULL)
@@ -22,8 +22,8 @@ int ParseUnit::initSelf(const char* const parseBase, const char* const binaryDat
 	this->binaryFilePath = binaryDataFile;
 	this->StrictStr = strictString;
 
-	this->doc = new TiXmlDocument(parseBase);
-	this->doc->LoadFile(TIXML_ENCODING_LEGACY);
+	this->docNode = new TiXmlDocument(parseBase);
+	this->docNode->LoadFile(TIXML_ENCODING_LEGACY);
 
 	//创建插件加载器
 	this->loadTools = new ExtensionLoader();
@@ -50,7 +50,7 @@ int ParseUnit::SetOriginalMsg(UWORD_i16 * const OriginalMsg) {
 int ParseUnit::CollectCmdEnterPoint(const char* const CmdName, const char* const libraryKeyAndArgs) {
 	string key = CmdName;
 	string value = libraryKeyAndArgs;
-	this->cmdEnterpointContainer[key] = value;
+	this->cmdConfigContainer[key] = value;
 	
 	return 0;
 }
@@ -59,7 +59,7 @@ int ParseUnit::CollectCmdEnterPoint(const char* const CmdName, const char* const
 int ParseUnit::LoadParseLibrary() {
 
 	//寻找合适节点====================================================
-	TiXmlElement* protocolNode = this->doc->FirstChildElement("protocol");
+	TiXmlElement* protocolNode = this->docNode->FirstChildElement("protocol");
 	TiXmlElement* sysCfg = protocolNode->FirstChildElement("sysConfig");
 	TiXmlElement* library = sysCfg->FirstChildElement("library");
 	TiXmlElement* baseSupport = library->FirstChildElement("baseSupport");
@@ -95,11 +95,11 @@ int ParseUnit::LoadParseLibrary() {
 }
 
 
-AbstractPlugClass* ParseUnit::GetPlugWrapper(const char * const PlugName) {
+AbstractPlugClass* ParseUnit::GetAPlugin(const char * const PlugName) {
 	string key = PlugName;
-	map<string, AbstractPlugClass*>::iterator it = this->wrapperContainer.end();
+	map<string, AbstractPlugClass*>::iterator it = this->pluginContainer.end();
 
-	if (this->wrapperContainer.find(key) != it) {
+	if (this->pluginContainer.find(key) != it) {
 		return it->second;
 	}
 
@@ -109,7 +109,7 @@ AbstractPlugClass* ParseUnit::GetPlugWrapper(const char * const PlugName) {
 
 int ParseUnit::LoadCmdEnterPoint() {
 
-	TiXmlElement* sysCfg = this->doc->FirstChildElement("protocol")->FirstChildElement("sysConfig");
+	TiXmlElement* sysCfg = this->docNode->FirstChildElement("protocol")->FirstChildElement("sysConfig");
 	TiXmlElement* cmdList = sysCfg->FirstChildElement("cmdlist");
 	TiXmlElement* cmdOne = cmdList->FirstChildElement();
 	while (cmdOne != NULL) {
@@ -129,15 +129,15 @@ int ParseUnit::LoadCmdEnterPoint() {
 
 int ParseUnit::LoadPatternAndParseRule() {
 
-	TiXmlElement* sysCfg = this->doc->FirstChildElement("protocol")->FirstChildElement("sysConfig");
+	TiXmlElement* sysCfg = this->docNode->FirstChildElement("protocol")->FirstChildElement("sysConfig");
 	this->patternCollect = sysCfg->FirstChildElement("pattern");
-	this->parseRuleCollect = doc->FirstChildElement("protocol")->FirstChildElement("parseRule");
+	this->parseRuleCollect = docNode->FirstChildElement("protocol")->FirstChildElement("parseRule");
 
 	return 0;
 }
 
 
-int ParseUnit::GetMsgFromCache(UWORD_i16** original_msg) {
+int ParseUnit::GetOneMsg(UWORD_i16** original_msg) {
 	if (this->binaryFilePath == NULL) {
 		if (this->OriginalMsgCache == NULL) {
 			return -1;
@@ -158,12 +158,12 @@ bool ParseUnit::CheckCriterion(const char* const tagName, const char* const Msgi
 		return true;
 	}
 
-	string keyandargs = this->cmdEnterpointContainer[tagName];
+	string keyandargs = this->cmdConfigContainer[tagName];
 	string key = keyandargs.substr(0, keyandargs.find_first_of(" "));
 	string args = keyandargs.substr(keyandargs.find_first_of(" ") + 1);
 	char* val = "";
 
-	AbstractPlugClass* wrapper = this->wrapperContainer[key];
+	AbstractPlugClass* wrapper = this->pluginContainer[key];
 	if (!strcmp(Msgindex,"not")) {
 		wrapper->ProcessMsgUnitAsHexOrStr(msg_in, args.c_str(), &val);
 	}
@@ -199,12 +199,12 @@ int ParseUnit::ProcPureMsgSection(TiXmlElement * pureMsgRuleCollect, UWORD_i16 *
 			v_name = tag_name;
 		}
 		
-		string keyandargs = this->cmdEnterpointContainer[tag_name];
+		string keyandargs = this->cmdConfigContainer[tag_name];
 		string key = keyandargs.substr(0, keyandargs.find_first_of(" "));
 		string args = keyandargs.substr(keyandargs.find_first_of(" ") + 1);
 		char* val = "";
 
-		AbstractPlugClass* wrapper = this->wrapperContainer[key];
+		AbstractPlugClass* wrapper = this->pluginContainer[key];
 		wrapper->ProcessMsgUnitAsHexOrStr(puremsg_in + v_i, args.c_str(), &val);
 
 		if (this->outputFilePtr == NULL) {
@@ -254,7 +254,7 @@ int ParseUnit::MsgBasicParse(const UWORD_i16* const msg_in) {
 int ParseUnit::translateMsgAtNow() {
 	UWORD_i16 * msg_out;
 
-	while (this->GetMsgFromCache(&msg_out) != -1) {
+	while (this->GetOneMsg(&msg_out) != -1) {
 		this->MsgBasicParse(msg_out);
 		this->fitTimes = 0;//重置统计标志量
 		this->FindRuleAdaptAndTranslate(this->patternCollect, this->parseRuleCollect, msg_out);
@@ -305,6 +305,6 @@ int ParseUnit::CollectPlugIn(const char* const PlugName, AbstractPlugClass* Plug
 {
 	string key = PlugName;
 
-	this->wrapperContainer.insert(make_pair(PlugName, Plug_In));
+	this->pluginContainer.insert(make_pair(PlugName, Plug_In));
 	return 0;
 }

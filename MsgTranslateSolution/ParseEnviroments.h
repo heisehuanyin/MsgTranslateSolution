@@ -18,6 +18,6 @@ public:
 	virtual int SetPureMsg(UWORD_i16* msg_in);
 	virtual int GetPureMsg(UWORD_i16** msg_out);
 private:
-	TiXmlDocument* doc;
+	TiXmlDocument* docNode;
 };
 

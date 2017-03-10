@@ -32,7 +32,7 @@ private:
 	//从缓冲或者是底层插件中获取一条总线消息
 	//返回值：0，正常获取了总线消息
 	//返回值：-1，总线消息已经结束了，这次没有获取到消息
-	virtual int GetMsgFromCache(UWORD_i16** original_msg);
+	virtual int GetOneMsg(UWORD_i16** original_msg);
 
 	//核对所有的总线协议，解析一条消息
 	virtual int FindRuleAdaptAndTranslate(TiXmlElement* supperPattern, TiXmlElement* supperParseRule, UWORD_i16 * const msg_in);
@@ -50,7 +50,7 @@ private:
 	virtual int LoadPatternAndParseRule();
 
 	//提取已经收集的Plug
-	virtual AbstractPlugClass* GetPlugWrapper(const char * const PlugName);
+	virtual AbstractPlugClass* GetAPlugin(const char * const PlugName);
 
 	//手机命令引用点
 	virtual int CollectCmdEnterPoint(const char* const CmdName, const char* const libraryKeyAndArgs);
@@ -65,17 +65,16 @@ private:
 
 
 	StandardParseBaseSupportInterface* basep;
-	std::map<std::string, AbstractPlugClass*> wrapperContainer;//wrapper容器
-	std::map<std::string, std::string> cmdEnterpointContainer;
+	std::map<std::string, AbstractPlugClass*> pluginContainer;//wrapper容器
+	std::map<std::string, std::string> cmdConfigContainer;
 	ExtensionLoader* loadTools;//加载器
-	TiXmlDocument* doc;
+	TiXmlDocument* docNode;
 	TiXmlElement* patternCollect;// 存储经常使用的pattern集合节点
 	TiXmlElement* parseRuleCollect;// 存储常用的解析规则集合节点
 	const char* binaryFilePath;//二进制文件路径，数据源
 	const char* StrictStr;//输出条目约束字符串
 	FILE* outputFilePtr;
 	UWORD_i16* OriginalMsgCache;//手动写入的缓冲地
-	UWORD_i16* PureMsg;
 
 
 

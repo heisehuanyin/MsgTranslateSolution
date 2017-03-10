@@ -2,7 +2,7 @@
 
 
 
-ParseEnviroments::ParseEnviroments() : doc(NULL) {}
+ParseEnviroments::ParseEnviroments() : docNode(NULL) {}
 
 
 ParseEnviroments::~ParseEnviroments() {}
@@ -11,8 +11,8 @@ ParseEnviroments::~ParseEnviroments() {}
 // 载入解析依据文档
 int ParseEnviroments::LoadParseBase(const char* const parseBaseDoc) {
 	//基于xml解析，建立载入点
-	this->doc = new TiXmlDocument();//一个文档节点
-	doc->LoadFile(parseBaseDoc);
+	this->docNode = new TiXmlDocument();//一个文档节点
+	docNode->LoadFile(parseBaseDoc);
 
 	return 0;
 }
