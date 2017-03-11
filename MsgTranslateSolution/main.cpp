@@ -23,11 +23,17 @@
 //格式范例： MsgTranslateSolution  /help
 //工作参数： 程序名称					需要命令行帮助
 //格式范例： MsgTranslateSolution  /expose
-//工作参数： 程序名称					指定行为，导出所有内部控制参数5
+//工作参数： 程序名称					指定行为，导出所有内部控制参数
 void main(int argc, char** argv) {
 	//帮助选项，打印帮助内容
 	if (strcmp(*(argv + 1), "/help") == 0) {
-		printf("见程序注释，完成程序后再考虑添加");
+		printf("			\n\n\
+	格式范例： MsgTranslateSolution  /base xxxx.xml   /source xxxx.dat    \n\
+	工作参数： 程序名称		指明翻译基准	指明消息记录文件	\n\
+	格式范例： MsgTranslateSolution  /help\n\
+	工作参数： 程序名称		需要命令行帮助\n\
+	格式范例： MsgTranslateSolution  /expose\n\
+	工作参数： 程序名称		指定行为，导出所有内部控制参数\n\n");
 		return;
 	}
 
