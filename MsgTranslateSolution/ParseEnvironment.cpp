@@ -9,8 +9,6 @@ ParseUnit::~ParseUnit() {}
 ParseUnit::ParseUnit()
 	: binaryFilePath(NULL)
 	, StrictStr(NULL)
-	, loadTools(NULL)
-	, basep(NULL)
 	, outputFilePtr(NULL)
 	, OriginalMsgCache(NULL)
 	, prsEnv(NULL), fitTimes(0) {
@@ -23,13 +21,7 @@ int ParseUnit::initSelf(const char* const parseBase, const char* const binaryDat
 	this->binaryFilePath = binaryDataFile;
 	this->StrictStr = strictString;
 
-	this->prsEnv->initself(parseBase);
-
-	//创建插件加载器
-	this->loadTools = new ExtensionLoader();
-	this->LoadParseLibrary();
-	this->LoadCmdEnterPoint();
-
+	this->prsEnv->initself(parseBase, binaryDataFile);
 
 	if (outputFile != NULL) {
 		fopen_s(&this->outputFilePtr, outputFile, "w");
@@ -46,78 +38,7 @@ int ParseUnit::SetOriginalMsg(UWORD_i16 * const OriginalMsg) {
 
 
 
-int ParseUnit::CollectCmdEnterPoint(const char* const CmdName, const char* const libraryKeyAndArgs) {
-	string key = CmdName;
-	string value = libraryKeyAndArgs;
-	this->cmdConfigContainer[key] = value;
-	
-	return 0;
-}
 
-
-int ParseUnit::LoadParseLibrary() {
-
-	//寻找合适节点====================================================
-	TiXmlElement* baseSupport = this->prsEnv->GetLibraryCollect()->FirstChildElement("baseSupport");
-
-	// loadBasePlug===================================================
-	char** ab = (char**)&"";
-	int ntemp = 0;
-
-
-	this->loadTools->LoadNewParseBaseExtension(baseSupport->Attribute("rel"), ab, ntemp, &this->basep);
-	
-	//open binary data file
-	if (this->binaryFilePath != NULL) {
-		basep->OpenBinaryDataFile(this->binaryFilePath);
-	}
-
-	this->CollectPlugIn(baseSupport->Attribute("rel"), basep);
-
-
-	// loadEnhancePlug================================================
-	StandardExtensionInterface* pextension = NULL;
-	TiXmlElement* elm = this->prsEnv->GetLibraryCollect()->FirstChildElement("enhance");
-	while (elm != NULL) {
-		//正式工作
-		this->loadTools->LoadNewParseEnhanceExtension(elm->Attribute("rel"), ab, ntemp, &pextension);
-
-		this->CollectPlugIn(elm->Attribute("rel"), pextension);
-
-		elm = elm->NextSiblingElement();
-	}
-
-	return 0;
-}
-
-
-AbstractPlugClass* ParseUnit::GetAPlugin(const char * const PlugName) {
-	string key = PlugName;
-	map<string, AbstractPlugClass*>::iterator it = this->pluginContainer.end();
-
-	if (this->pluginContainer.find(key) != it) {
-		return it->second;
-	}
-
-	return nullptr;
-}
-
-
-int ParseUnit::LoadCmdEnterPoint() {
-	TiXmlElement* cmdOne = this->prsEnv->GetCmdPointCollect()->FirstChildElement();
-	while (cmdOne != NULL) {
-		char cmdandrel[2048] = "";
-		sprintf_s(cmdandrel, 2000, "%s", cmdOne->Attribute("rel"));
-		char* cmd = nullptr;
-		char* cmdtemp = nullptr;
-		cmd = strtok_s(cmdandrel, " ", &cmdtemp);
-		this->CollectCmdEnterPoint(cmdOne->Value(), cmdOne->Attribute("rel"));
-
-
-		cmdOne = cmdOne->NextSiblingElement();
-	}
-	return 0;
-}
 
 
 
@@ -131,7 +52,7 @@ int ParseUnit::GetOneMsg(UWORD_i16** original_msg) {
 		this->OriginalMsgCache = NULL;
 	}
 	else {
-		return this->basep->GetOneOriginalMsg(original_msg);
+		return this->prsEnv->GetBaseSupportPlug()->GetOneOriginalMsg(original_msg);
 	}
 	return 0;
 }
@@ -142,22 +63,20 @@ bool ParseUnit::CheckCriterion(const char* const tagName, const char* const Msgi
 	if (!strcmp(valCertain,"not")) {
 		return true;
 	}
-
-	string keyandargs = this->cmdConfigContainer[tagName];
-	string key = keyandargs.substr(0, keyandargs.find_first_of(" "));
-	string args = keyandargs.substr(keyandargs.find_first_of(" ") + 1);
+	CmdWrapper* tmpWrap = this->prsEnv->GetCmdConfig(tagName);
 	char* val = "";
 
-	AbstractPlugClass* wrapper = this->pluginContainer[key];
+	AbstractPlugClass* plugin = this->prsEnv->GetUniversalPlugin(tmpWrap->linkRel);
+
 	if (!strcmp(Msgindex,"not")) {
-		wrapper->ProcessMsgUnitAsHexOrStr(msg_in, args.c_str(), &val);
+		plugin->ProcessMsgUnitAsHexOrStr(msg_in, tmpWrap->arguments, &val);
 	}
 	else {
 		int index = atoi(Msgindex);
 		UWORD_i16* puremsg = nullptr;
-		this->basep->GetPureMsgBody(msg_in, &puremsg);
+		this->prsEnv->GetBaseSupportPlug()->GetPureMsgBody(msg_in, &puremsg);
 
-		wrapper->ProcessMsgUnitAsHexOrStr(puremsg+index, args.c_str(), &val);
+		plugin->ProcessMsgUnitAsHexOrStr(puremsg+index, tmpWrap->arguments, &val);
 
 	}
 	int valpre = strtol(valCertain, NULL, 16);
@@ -171,7 +90,6 @@ bool ParseUnit::CheckCriterion(const char* const tagName, const char* const Msgi
 
 
 int ParseUnit::ProcPureMsgSection(TiXmlElement * pureMsgRuleCollect, UWORD_i16 * const puremsg_in) {
-	UWORD_i16 * puremsg = nullptr;
 	TiXmlElement* oneParseRule = pureMsgRuleCollect->FirstChildElement();
 
 	while (oneParseRule != NULL) {
@@ -180,17 +98,15 @@ int ParseUnit::ProcPureMsgSection(TiXmlElement * pureMsgRuleCollect, UWORD_i16 *
 		const char* v_name = oneParseRule->Attribute("name");
 
 		int v_i = atoi(v_index);
+		char* val = "";
 		if (!strcmp(v_name, "default")) {
 			v_name = tag_name;
 		}
 		
-		string keyandargs = this->cmdConfigContainer[tag_name];
-		string key = keyandargs.substr(0, keyandargs.find_first_of(" "));
-		string args = keyandargs.substr(keyandargs.find_first_of(" ") + 1);
-		char* val = "";
+		CmdWrapper* tmpit = this->prsEnv->GetCmdConfig(tag_name);
+		AbstractPlugClass* plugin = this->prsEnv->GetUniversalPlugin(tmpit->linkRel);
 
-		AbstractPlugClass* wrapper = this->pluginContainer[key];
-		wrapper->ProcessMsgUnitAsHexOrStr(puremsg_in + v_i, args.c_str(), &val);
+		plugin->ProcessMsgUnitAsHexOrStr(puremsg_in + v_i, tmpit->arguments, &val);
 
 		if (this->outputFilePtr == NULL) {
 			printf("%s:%s\t", v_name , val);
@@ -217,11 +133,11 @@ int ParseUnit::MsgBasicParse(const UWORD_i16* const msg_in) {
 	char** keywords = nullptr;
 	int num = 0;
 
-	this->basep->EnumKeyWordsInner(&keywords, &num);
+	this->prsEnv->GetBaseSupportPlug()->EnumKeyWordsInner(&keywords, &num);
 
 	char* value = nullptr;
 	for (int i = 0; i < num; i++) {
-		this->basep->ProcessMsgUnitAsHexOrStr(msg_in, *(keywords + i), &value);
+		this->prsEnv->GetBaseSupportPlug()->ProcessMsgUnitAsHexOrStr(msg_in, *(keywords + i), &value);
 		
 		if (this->outputFilePtr == NULL) {
 			printf("%s:%s\t", *(keywords + i), value);
@@ -265,7 +181,7 @@ int ParseUnit::FindRuleAdaptAndTranslate(TiXmlElement* patternCollect, TiXmlElem
 			if (this->CheckCriterion(tagname, varIndex, target_value, msg_in)) {
 				if (elelm->NoChildren()) {
 					UWORD_i16* puremsg = nullptr;
-					this->basep->GetPureMsgBody(msg_in, &puremsg);
+					this->prsEnv->GetBaseSupportPlug()->GetPureMsgBody(msg_in, &puremsg);
 					this->ProcPureMsgSection(oneRuleAdapted, puremsg);
 					this->fitTimes += 1;
 				}
@@ -284,12 +200,3 @@ int ParseUnit::FindRuleAdaptAndTranslate(TiXmlElement* patternCollect, TiXmlElem
 	return 0;
 }
 
-
-// 收集插件
-int ParseUnit::CollectPlugIn(const char* const PlugName, AbstractPlugClass* Plug_In)
-{
-	string key = PlugName;
-
-	this->pluginContainer.insert(make_pair(PlugName, Plug_In));
-	return 0;
-}

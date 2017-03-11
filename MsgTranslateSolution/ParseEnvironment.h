@@ -37,21 +37,7 @@ private:
 	//核对所有的总线协议，解析一条消息
 	virtual int FindRuleAdaptAndTranslate(TiXmlElement* supperPattern, TiXmlElement* supperParseRule, UWORD_i16 * const msg_in);
 
-	//收集加载过程中获得的插件
-	virtual int CollectPlugIn(const char* const PlugName, AbstractPlugClass* Plug_In);
 	
-	//加载文件中引用的解析库
-	virtual int LoadParseLibrary();
-	
-	//加载定义的命令入口
-	virtual int LoadCmdEnterPoint();
-
-
-	//提取已经收集的Plug
-	virtual AbstractPlugClass* GetAPlugin(const char * const PlugName);
-
-	//手机命令引用点
-	virtual int CollectCmdEnterPoint(const char* const CmdName, const char* const libraryKeyAndArgs);
 
 	//处理纯粹的总线消息
 	virtual int ProcPureMsgSection(TiXmlElement * pureMsgRuleCollect, UWORD_i16 * const msg_in);//解析纯粹总线消息
@@ -62,11 +48,7 @@ private:
 
 
 
-	StandardBaseSupportInterface* basep;
-	std::map<std::string, AbstractPlugClass*> pluginContainer;//wrapper容器
-	std::map<std::string, std::string> cmdConfigContainer;
-	ExtensionLoader* loadTools;//加载器
-	const char* binaryFilePath;//二进制文件路径，数据源
+	const char* binaryFilePath;//二进
 	const char* StrictStr;//输出条目约束字符串
 	FILE* outputFilePtr;
 	UWORD_i16* OriginalMsgCache;//手动写入的缓冲地
@@ -80,6 +62,5 @@ private:
 
 	ParseEnviroments* prsEnv;
 	int fitTimes;
-public:
 };
 
