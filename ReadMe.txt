@@ -39,12 +39,13 @@ Visual C++
 
 
 
-随软件提供文件：
-	1.软件可运行程序以及几个类库dll				：完整示例，用来演示完整的解析过程
-	2.软件以及类库源代码							：自行编译和拓展的基础
-	3.ReadMe.txt文件								：对于整个软件的概要说明
-	4.Source.parserule文件						：人类可读写的解析规则配置文件
-	5.ParseConfigration.xml文件					：结构化的解析规则配置文件，便于软件高速读取和引用，较为繁琐，编译程序自动生成
-	6.程序利用dll拓展能力说明.txt					：如何利用dll对整个消息解析平台进行拓展的实用帮助
-	7.ParseCompiler程序							：自动转换parserule文件到ParseConfigration文件的程序
-	8.BinaryDataMaker程序						：构建一个仿真的总线文件，验证软件翻译功能
+项目组件：
+	1.MsgTranslateSolution项目生成翻译软件主体						：平台运行的框架
+	2.BinaryDataMaker项目生成模拟数据文件							：示范二进制总线数据文件
+	3.其他项目生成平台用拓展插件dll									：功能插件
+	4.ReadMe.txt文件												：对于整个软件的概要说明
+	5.Source.parserule文件											：人类可读写的解析规则配置文件，其中附有详细的编写说明
+	6.ParseConfigration.xml文件										：结构化的解析规则配置文件，便于软件高速读取和引用，繁琐，编译程序生成，编译程序位于ParseruleCompiler.MsgTranslateSolution项目
+	7.程序利用dll拓展能力说明.txt									：如何利用dll对整个消息解析平台进行拓展的实用帮助
+	8.导出平台的所有接口参数.bat									：利用平台提供的机制导出左右工作插件的接口参数，并提供给定输入，观察输出内容形式，便于编写parserule文件
+	9.运行解析实例数据.bat											：运行软件解析解决方案提供的模拟数据，并将输出打印到屏幕上
